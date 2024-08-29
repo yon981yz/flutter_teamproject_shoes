@@ -1,10 +1,25 @@
-  import 'package:flutter_teamproject_shoes/model/dev_kiosk.dart';
+import 'package:flutter_teamproject_shoes/model/account.dart';
+import 'package:flutter_teamproject_shoes/model/shoes.dart';
+import 'package:flutter_teamproject_shoes/vm/database_handler.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
 
-Future<List<DevKiosk>> queryDevkiosk() async{
-    final Database db = await initializeDB();
+final DatabaseHandler databaseHandler = DatabaseHandler();
+
+Future<List<Shoes>> queryshoes() async{
+    final Database db = await databaseHandler.initializeDB();
     final List<Map<String, Object?>> queryResult =
-      await db.rawQuery('select * from address');
-      return queryResult.map((e) => DevKiosk.fromMap(e)).toList();
+      await db.rawQuery('select * from shoes');
+      return queryResult.map((e) => Shoes.fromMap(e)).toList();
   }
+
+Future<List<Accout>> queryAccount() async{
+    final Database db = await databaseHandler.initializeDB();
+    final List<Map<String, Object?>> queryResult =
+      await db.rawQuery('select * from shoes');
+      return queryResult.map((e) => Accout.fromMap(e)).toList();
+      ...
+  }
+
+
+
+  
