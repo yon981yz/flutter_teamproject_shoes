@@ -10,6 +10,6 @@ class UserProductDetails extends StatefulWidget {
 class _UserProductDetailsState extends State<UserProductDetails> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold();
   }
 }
