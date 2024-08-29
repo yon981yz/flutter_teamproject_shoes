@@ -10,7 +10,7 @@ class DatabaseHandler{
       onCreate: (db, version) async{
         await db.execute(
           """
-          create table address
+          create table account
           (
           id integer primary key autoincrement,
           name text,
