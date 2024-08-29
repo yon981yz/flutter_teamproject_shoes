@@ -32,5 +32,5 @@ class DevKiosk {
   size = res['size'],
   color = res['color'],
   salseprice = res['salseprice'],
-  receiptdate = res['receiptdate'];
+  receiptdate = res['receiptdate']
 }
