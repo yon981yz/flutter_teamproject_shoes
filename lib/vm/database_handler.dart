@@ -18,6 +18,8 @@ class DatabaseHandler{
           color text,
           salseprice int,
           receiptdate date
+          image_shoes blob, 
+          image_logo blob, 
           )
           """
         );
