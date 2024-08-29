@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class DevStatistic extends StatefulWidget {
-  const DevStatistic({super.key});
+class MgtStatistic extends StatefulWidget {
+  const MgtStatistic({super.key});
 
   @override
-  State<DevStatistic> createState() => _DevStatisticState();
+  State<MgtStatistic> createState() => _MgtStatisticState();
 }
 
-class _DevStatisticState extends State<DevStatistic> {
+class _MgtStatisticState extends State<MgtStatistic> {
   @override
   Widget build(BuildContext context) {
     return const Placeholder();

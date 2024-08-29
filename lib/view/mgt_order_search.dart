@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class DevOrderSearch extends StatefulWidget {
-  const DevOrderSearch({super.key});
+class MgtOrderSearch extends StatefulWidget {
+  const MgtOrderSearch({super.key});
 
   @override
-  State<DevOrderSearch> createState() => _DevOrderSearchState();
+  State<MgtOrderSearch> createState() => _MgtOrderSearchState();
 }
 
-class _DevOrderSearchState extends State<DevOrderSearch> {
+class _MgtOrderSearchState extends State<MgtOrderSearch> {
   @override
   Widget build(BuildContext context) {
     return const Placeholder();
