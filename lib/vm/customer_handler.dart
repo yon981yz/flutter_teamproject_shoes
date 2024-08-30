@@ -15,7 +15,7 @@ class CustomerHandler{
     final Database db = await databaseHandler.initializeDB();
     result = await db.rawInsert(
       """
-      insert into shoes(id, name, phone, password)
+      insert into account(id, name, phone, password)
       values (?,?,?,?)
       """, [
         account.id,
@@ -26,13 +26,23 @@ class CustomerHandler{
     );
     return result;
   }
+///// 로그인 검색
+
+Future<List<Accout>> queryLoginCheck(String id, String password) async{
+    final Database db = await databaseHandler.initializeDB();
+    final List<Map<String, Object?>> queryResult =
+      await db.rawQuery('select * from Accont where id = ? and password = ?',
+      [id,password]);
+      return queryResult.map((e) => Accout.fromMap(e)).toList();
+  }
 
 ///// 내정보 검색
 
-Future<List<Accout>> queryMyinfo() async{
+Future<List<Accout>> queryMyinfo(String id) async{
     final Database db = await databaseHandler.initializeDB();
     final List<Map<String, Object?>> queryResult =
-      await db.rawQuery('select * from Accont');
+      await db.rawQuery('select * from Accont where id = ?',
+      [id]);
       return queryResult.map((e) => Accout.fromMap(e)).toList();
   }
 
@@ -54,6 +64,15 @@ Future<List<Shoes>> queryShoesHomeSearch(String name) async{
       ['%$name%']);
       return queryResult.map((e) => Shoes.fromMap(e)).toList();
   }
+///// 신발 이미지로 정렬한상태에서 이름으로 검색 (고객 구매 페이지 디스플레이에서 검색) 
+
+Future<List<Shoes>> queryShoesHomeSelect(String size) async{
+    final Database db = await databaseHandler.initializeDB();
+    final List<Map<String, Object?>> queryResult =
+      await db.rawQuery('select * from shoes group by image where size = ?',
+      [size]);
+      return queryResult.map((e) => Shoes.fromMap(e)).toList();
+  }
 
 ///// 브랜드이름 Nike 이름으로 정렬 (고객 구매 페이지 브랜드별 디스플레이) 
 
@@ -63,6 +82,7 @@ Future<List<Shoes>> queryNike() async{
       await db.rawQuery('select * from shoes where brand = "Nike"');
       return queryResult.map((e) => Shoes.fromMap(e)).toList();
   }
+
 ///// 브랜드이름 Nike 이름으로 정렬한table에서 이름검색 (브랜트별 페이지에서 검색) 
 
 Future<List<Shoes>> queryNikeSearch(String name) async{
