@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_teamproject_shoes/view/cust_home.dart';
 import 'package:flutter_teamproject_shoes/view/mgt_home.dart';
+import 'package:flutter_teamproject_shoes/view/mgt_product_mgt.dart';
 import 'package:flutter_teamproject_shoes/view/user_login.dart';
 import 'package:get/get.dart';
 
@@ -24,7 +25,7 @@ class _HomeState extends State<Home> {
               child: ElevatedButton(
                 onPressed: () {
                   Get.to(
-                    ()=> const MgtHome()
+                    ()=> const MgtProductMgt()
                   );
                 }, 
                 child: const Text('관리자'),

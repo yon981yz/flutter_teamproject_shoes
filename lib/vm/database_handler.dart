@@ -20,9 +20,9 @@ class DatabaseHandler{
             size INTEGER,
             color TEXT,
             salesprice INTEGER,
-            receiptdate DATE,
-            image_shoes BLOB,
-            image_logo BLOB
+            image BLOB,
+            logo BLOB,
+            brand TEXT
           )
           """
         );
