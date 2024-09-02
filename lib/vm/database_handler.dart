@@ -6,21 +6,29 @@ class DatabaseHandler{
     Future<Database> initializeDB() async{
     String path = await getDatabasesPath();
     return openDatabase(
-      join(path, "kiosk.db"),
+      join(path, "shoes_store.db"),
       onCreate: (db, version) async{
+        
+        // shoes
+
         await db.execute(
           """
-          create table account
+          create table shoes
           (
-          id integer primary key autoincrement,
-          name text,
-          size int,
-          color text,
-          salseprice int,
-          receiptdate date
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT,
+            size INTEGER,
+            color TEXT,
+            salesprice INTEGER,
+            image BLOB,
+            logo BLOB,
+            brand TEXT
           )
           """
         );
+
+        // Account
+
         await db.execute("""
           CREATE TABLE account (
             id text PRIMARY KEY,
@@ -29,31 +37,45 @@ class DatabaseHandler{
             password TEXT
           )
         """);
+
+        // branch
+
         await db.execute("""
           CREATE TABLE branch (
             id integer primary key autoincrement,
             name TEXT
           )
         """);
+
+        // purchase
+
         await db.execute("""
           CREATE TABLE purchase (
-            id text PRIMARY KEY,
-            account_id text PRIMARY KEY,
-            shoes_id integer PRIMARY KEY,
-            branch_id integer PRIMARY KEY,
-            salesprice text,
-            purchasedate Date,
-            collectiondate Date,
-            collectionstatus text
+            id TEXT PRIMARY KEY,
+            account_id TEXT,
+            shoes_id INTEGER,
+            branch_id INTEGER,
+            salesprice INTEGER,
+            purchasedate DATE,
+            collectiondate DATE,
+            collectionstatus TEXT,
+            FOREIGN KEY(account_id) REFERENCES account(id),
+            FOREIGN KEY(shoes_id) REFERENCES shoes(id),
+            FOREIGN KEY(branch_id) REFERENCES branch(id)
           )
         """);
+
+        // Account
+
         await db.execute("""
           CREATE TABLE transfer (
-            id integer primary key autoincrement,
-            shoes_id text PRIMARY KEY,
-            branch_id TEXT PRIMARY KEY,
-            date Date
-            collectionstatus text
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            shoes_id INTEGER,
+            branch_id INTEGER,
+            date DATE,
+            collectionstatus TEXT,
+            FOREIGN KEY(shoes_id) REFERENCES shoes(id),
+            FOREIGN KEY(branch_id) REFERENCES branch(id)
           )
         """);
       },

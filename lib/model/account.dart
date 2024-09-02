@@ -1,20 +1,20 @@
-class Accout{
-  final int? id;
+class Account{
+  final String id;
   final String name;
   final String phone;
   final String password;
   
 
-  Accout(
+  Account(
     {
-      this.id,
+      required this.id,
       required this.name,
       required this.phone,
       required this.password,
     }
   );
 
-  Accout.fromMap(Map<String, dynamic> acs)
+  Account.fromMap(Map<String, dynamic> acs)
   : id = acs['id'],
   name = acs['name'],
   phone = acs['phone'],

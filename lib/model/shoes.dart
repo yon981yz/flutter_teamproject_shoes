@@ -8,7 +8,8 @@ class Shoes{
   final String name;
   final int size;
   final int salesprice;
-  final String receiptdate; 
+  final String color; 
+  final String brand; 
 
   Shoes({
     this.id,
@@ -17,7 +18,8 @@ class Shoes{
     required this.name,
     required this.size,
     required this.salesprice,
-    required this.receiptdate
+    required this.color,
+    required this.brand
   });
   Shoes.fromMap(Map<String, dynamic> inf)
   : id=inf['id'],
@@ -26,5 +28,6 @@ class Shoes{
   name=inf['name'],
   size=inf['size'],
   salesprice=inf['salesprice'],
-  receiptdate=inf['receiptdate'];
+  color=inf['color'],
+  brand=inf['brand'];
 }
