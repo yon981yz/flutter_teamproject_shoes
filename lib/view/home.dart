@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_teamproject_shoes/model/branch.dart';
 import 'package:flutter_teamproject_shoes/view/cust_home.dart';
 import 'package:flutter_teamproject_shoes/view/mgt_home.dart';
-import 'package:flutter_teamproject_shoes/view/mgt_product_add.dart';
-import 'package:flutter_teamproject_shoes/view/user_choice_branch.dart';
-import 'package:flutter_teamproject_shoes/view/user_complite_product.dart';
-import 'package:flutter_teamproject_shoes/view/user_home.dart';
 import 'package:flutter_teamproject_shoes/view/user_login.dart';
 import 'package:flutter_teamproject_shoes/vm/database_handler.dart';
 import 'package:flutter_teamproject_shoes/vm/kiosk_handler.dart';
@@ -53,7 +49,7 @@ KioskHandler kioskHandler = KioskHandler();
               child: ElevatedButton(
                 onPressed: () {
                   Get.to(
-                    ()=> const MgtProductAdd()
+                    ()=> const MgtHome()
                   );
                 }, 
                 child: const Text('관리자'),
