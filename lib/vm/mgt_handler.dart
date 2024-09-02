@@ -4,6 +4,8 @@ import 'package:flutter_teamproject_shoes/model/purchaseDetail.dart';
 import 'package:flutter_teamproject_shoes/model/shoes.dart';
 import 'package:flutter_teamproject_shoes/model/topAccount.dart';
 import 'package:flutter_teamproject_shoes/model/topfiveshoes.dart';
+import 'package:flutter_teamproject_shoes/model/transfer.dart';
+import 'package:flutter_teamproject_shoes/model/transferSummary.dart';
 import 'package:flutter_teamproject_shoes/vm/database_handler.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -51,6 +53,59 @@ Future<List<PurchaseDetail>> queryPurchaseDetails() async {
     INNER JOIN account ON purchase.account_id = account.id
     INNER JOIN shoes ON purchase.shoes_id = shoes.id
     order by purchase.purchasedate
+  ''');
+  
+  return queryResult.map((e) => PurchaseDetail.fromMap(e)).toList();
+}
+  ////구매 내역 확인
+
+Future<List<PurchaseDetail>> queryPurchaseDetailsSearch(String name) async {
+  final Database db = await databaseHandler.initializeDB();
+  final List<Map<String, Object?>> queryResult = await db.rawQuery('''
+    SELECT
+      purchase.id AS id,
+      account.name AS account_name,
+      account.phone AS account_phone,
+      shoes.name AS shoes_name,
+      shoes.size AS shoes_size,
+      shoes.color AS shoes_color,
+      shoes.brand AS shoes_brand,
+      purchase.salesprice,
+      purchase.purchasedate,
+      purchase.collectiondate,
+      purchase.collectionstatus
+    FROM purchase
+    INNER JOIN account ON purchase.account_id = account.id
+    INNER JOIN shoes ON purchase.shoes_id = shoes.id
+    where account.name like ?
+    order by purchase.purchasedate
+  ''');
+  
+  return queryResult.map((e) => PurchaseDetail.fromMap(e)).toList();
+}
+
+  ////구매 내역 확인
+
+Future<List<PurchaseDetail>> queryPurchaseDetails2Limit() async {
+    final Database db = await databaseHandler.initializeDB();
+    final List<Map<String, Object?>> queryResult = await db.rawQuery('''
+      SELECT
+      purchase.id AS id,
+      account.name AS account_name,
+      account.phone AS account_phone,
+      shoes.name AS shoes_name,
+      shoes.size AS shoes_size,
+      shoes.color AS shoes_color,
+      shoes.brand AS shoes_brand,
+      purchase.salesprice,
+      purchase.purchasedate,
+      purchase.collectiondate,
+      purchase.collectionstatus
+      FROM purchase
+      INNER JOIN account ON purchase.account_id = account.id
+      INNER JOIN shoes ON purchase.shoes_id = shoes.id
+      ORDER BY purchase.purchasedate
+      LIMIT 2
   ''');
   
   return queryResult.map((e) => PurchaseDetail.fromMap(e)).toList();
@@ -160,7 +215,36 @@ Future<List<Topaccount>> queryTopFiveAccount() async{
       return queryResult.map((e) => Topaccount.fromMap(e)).toList();
   }
 
+// 배송추가
 
-  
+Future<int> insertTransfer(Transfer transfer) async {
+  final Database db = await databaseHandler.initializeDB();
+    int result = await db.rawInsert(
+      """
+      INSERT INTO transfer (shoes_id, branch_id, date, collectionstatus)
+      VALUES (?, ?, ?, ?)
+      """, [
+      transfer.shoesid,
+      transfer.branchid,
+      transfer.date,
+      transfer.collection
+      ]
+    );
+    return result;
   }
+
+// 배송확인
+Future<List<Transfersummary>> queryTransfer() async {
+  final Database db = await databaseHandler.initializeDB();
+  final List<Map<String, Object?>> queryResult =
+    await db.rawQuery('''
+select t.id, b.name as branchname, s.id as shoesid, s.name as shoesname, t.date, t.collection
+from transfer t
+join branch b on b.id = t.branch_id
+join shoes s on s.id = t.shoes_id
+    ''');
+  return queryResult.map((e) => Transfersummary.fromMap(e)).toList();
+}
+
+}
 

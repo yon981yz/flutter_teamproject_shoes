@@ -1,22 +1,26 @@
-class Transfer {
+class Transfersummary {
   final int? id;
   final String date;
   final String collection;
   final int shoesid;
-  final int branchid;
+  final String branchname;
+  final String shoesname;
 
-  Transfer({
+
+  Transfersummary({
     this.id,
     required this.date,
     required this.collection,
     required this.shoesid,
-    required this.branchid,
+    required this.branchname,
+    required this.shoesname,
   });
 
-  Transfer.fromMap(Map<String, dynamic> tfs)
+  Transfersummary.fromMap(Map<String, dynamic> tfs)
     : id = tfs['id'],
       date = tfs['date'],
       collection = tfs['collection'],
       shoesid = tfs['shoesid'],
-      branchid = tfs['branchid'];
+      branchname = tfs['branchname'],
+      shoesname = tfs['shoesname'];
 }

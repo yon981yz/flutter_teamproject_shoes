@@ -32,9 +32,9 @@ class _MgtStatisticState extends State<MgtStatistic> {
                     children: [
 ////// 이번달 매출현황
                       Container(
-                        height: 225,
-                        width: 600,
-                        margin: const EdgeInsets.all(30.0),
+                        height: 200,
+                        width: 620,
+                        margin: const EdgeInsets.all(10.0),
                         decoration: BoxDecoration(
                             border: Border.all(
                                 color: const Color.fromARGB(255, 0, 0, 0))),
@@ -53,42 +53,44 @@ class _MgtStatisticState extends State<MgtStatistic> {
                                 )
                               ],
                             ),
-                            SizedBox(
-                              width: 250,
-                              child: FutureBuilder(
-                                future: mgtHandler.querySalesToday(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
-                                    return DataTable(columns: const [
-                                      DataColumn(label: Text('총 구매')),
-                                      DataColumn(label: Text('총 매출')),
-                                    ], rows: [
-                                      DataRow(cells: [
-                                        DataCell(Text(snapshot.data![0].count
-                                            .toString())),
-                                        DataCell(Text(snapshot.data![0].total
-                                            .toString())),
-                                      ])
-                                    ]);
-                                  } else {
-                                    return DataTable(
-                                      dividerThickness: 1,
-                                      // dataRowColor: const Color.fromARGB(255, 238, 238, 238),
-                                      columns: const [
-                                        DataColumn(
-                                          label: Text('총 구매'),
-                                        ),
+                            Expanded(
+                              child: SizedBox(
+                            width: 500,
+                                child: FutureBuilder(
+                                  future: mgtHandler.querySalesToday(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      return DataTable(columns: const [
+                                        DataColumn(label: Text('총 구매')),
                                         DataColumn(label: Text('총 매출')),
-                                      ],
-                                      rows: const [
+                                      ], rows: [
                                         DataRow(cells: [
-                                          DataCell(Text('0')),
-                                          DataCell(Text('0')),
-                                        ]),
-                                      ],
-                                    );
-                                  }
-                                },
+                                          DataCell(Text(snapshot.data![0].count
+                                              .toString())),
+                                          DataCell(Text(snapshot.data![0].total
+                                              .toString())),
+                                        ])
+                                      ]);
+                                    } else {
+                                      return DataTable(
+                                        dividerThickness: 1,
+                                        // dataRowColor: const Color.fromARGB(255, 238, 238, 238),
+                                        columns: const [
+                                          DataColumn(
+                                            label: Text('총 구매'),
+                                          ),
+                                          DataColumn(label: Text('총 매출')),
+                                        ],
+                                        rows: const [
+                                          DataRow(cells: [
+                                            DataCell(Text('0')),
+                                            DataCell(Text('0')),
+                                          ]),
+                                        ],
+                                      );
+                                    }
+                                  },
+                                ),
                               ),
                             ),
                           ],
@@ -98,9 +100,9 @@ class _MgtStatisticState extends State<MgtStatistic> {
                       ////// 오늘의 매출현황
 
                       Container(
-                        height: 225,
-                        width: 600,
-                        margin: const EdgeInsets.all(30.0),
+                        height: 200,
+                        width: 620,
+                        margin: const EdgeInsets.all(10.0),
                         decoration: BoxDecoration(
                             border: Border.all(
                                 color: const Color.fromARGB(255, 0, 0, 0))),
@@ -121,7 +123,7 @@ class _MgtStatisticState extends State<MgtStatistic> {
                             ),
                             Expanded(
                               child: SizedBox(
-                                width: 500,
+                            width: 500,
                                 child: FutureBuilder(
                                   future: mgtHandler.querySalesToday(),
                                   builder: (context, snapshot) {
@@ -167,9 +169,9 @@ class _MgtStatisticState extends State<MgtStatistic> {
                   ////// 이번달 Top 5 매출 상품
 
                   Container(
-                    height: 510,
-                    width: 600,
-                    margin: const EdgeInsets.all(30.0),
+                    height: 420,
+                    width: 620,
+                    margin: const EdgeInsets.all(10.0),
                     decoration: BoxDecoration(
                         border: Border.all(
                             color: const Color.fromARGB(255, 0, 0, 0))),
@@ -191,11 +193,11 @@ class _MgtStatisticState extends State<MgtStatistic> {
                         ),
                         Expanded(
                           child: SizedBox(
-                            width: 250,
+                            width: double.infinity,
                             child: FutureBuilder(
                               future: mgtHandler.queryTopFiveShoes(),
                               builder: (context, snapshot) {
-                                if (snapshot.hasData) {
+                                if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                                   return DataTable(columns: const [
                                     DataColumn(label: Text('이미지')),
                                     DataColumn(label: Text('상품번호')),
@@ -205,8 +207,11 @@ class _MgtStatisticState extends State<MgtStatistic> {
                                     DataColumn(label: Text('총 매출액')),
                                   ], rows: [
                                     DataRow(cells: [
-                                      DataCell(Text(
-                                          snapshot.data![0].image.toString())),
+                                      DataCell(Image.memory(
+                                        snapshot.data![0].image,
+                                        width: 100,
+                                        height: 50,
+                                      )),
                                       DataCell(Text(snapshot.data![0].shoesid
                                           .toString())),
                                       DataCell(Text(snapshot.data![0].shoesname
@@ -219,8 +224,11 @@ class _MgtStatisticState extends State<MgtStatistic> {
                                           .toString())),
                                     ]),
                                     DataRow(cells: [
-                                      DataCell(Text(
-                                          snapshot.data![1].image.toString())),
+                                      DataCell(Image.memory(
+                                        snapshot.data![1].image,
+                                        width: 100,
+                                        height: 50,
+                                      )),
                                       DataCell(Text(snapshot.data![1].shoesid
                                           .toString())),
                                       DataCell(Text(snapshot.data![1].shoesname
@@ -233,8 +241,11 @@ class _MgtStatisticState extends State<MgtStatistic> {
                                           .toString())),
                                     ]),
                                     DataRow(cells: [
-                                      DataCell(Text(
-                                          snapshot.data![2].image.toString())),
+                                      DataCell(Image.memory(
+                                        snapshot.data![2].image,
+                                        width: 100,
+                                        height: 50,
+                                      )),
                                       DataCell(Text(snapshot.data![2].shoesid
                                           .toString())),
                                       DataCell(Text(snapshot.data![2].shoesname
@@ -247,8 +258,11 @@ class _MgtStatisticState extends State<MgtStatistic> {
                                           .toString())),
                                     ]),
                                     DataRow(cells: [
-                                      DataCell(Text(
-                                          snapshot.data![3].image.toString())),
+                                      DataCell(Image.memory(
+                                        snapshot.data![3].image,
+                                        width: 100,
+                                        height: 50,
+                                      )),
                                       DataCell(Text(snapshot.data![3].shoesid
                                           .toString())),
                                       DataCell(Text(snapshot.data![3].shoesname
@@ -261,8 +275,11 @@ class _MgtStatisticState extends State<MgtStatistic> {
                                           .toString())),
                                     ]),
                                     DataRow(cells: [
-                                      DataCell(Text(
-                                          snapshot.data![4].image.toString())),
+                                      DataCell(Image.memory(
+                                        snapshot.data![4].image,
+                                        width: 100,
+                                        height: 50,
+                                      )),
                                       DataCell(Text(snapshot.data![4].shoesid
                                           .toString())),
                                       DataCell(Text(snapshot.data![4].shoesname
@@ -287,44 +304,12 @@ class _MgtStatisticState extends State<MgtStatistic> {
                                     ],
                                     rows: const [
                                       DataRow(cells: [
-                                      DataCell(Text('')),
-                                      DataCell(Text('')),
-                                      DataCell(Text('')),
-                                      DataCell(Text('')),
-                                      DataCell(Text('')),
-                                      DataCell(Text('')),
-                                      ]),
-                                      DataRow(cells: [
-                                      DataCell(Text('')),
-                                      DataCell(Text('')),
-                                      DataCell(Text('')),
-                                      DataCell(Text('')),
-                                      DataCell(Text('')),
-                                      DataCell(Text('')),
-                                      ]),
-                                      DataRow(cells: [
-                                      DataCell(Text('')),
-                                      DataCell(Text('')),
-                                      DataCell(Text('')),
-                                      DataCell(Text('')),
-                                      DataCell(Text('')),
-                                      DataCell(Text('')),
-                                      ]),
-                                      DataRow(cells: [
-                                      DataCell(Text('')),
-                                      DataCell(Text('')),
-                                      DataCell(Text('')),
-                                      DataCell(Text('')),
-                                      DataCell(Text('')),
-                                      DataCell(Text('')),
-                                      ]),
-                                      DataRow(cells: [
-                                      DataCell(Text('')),
-                                      DataCell(Text('')),
-                                      DataCell(Text('')),
-                                      DataCell(Text('')),
-                                      DataCell(Text('')),
-                                      DataCell(Text('')),
+                                        DataCell(Text('')),
+                                        DataCell(Text('')),
+                                        DataCell(Text('')),
+                                        DataCell(Text('')),
+                                        DataCell(Text('')),
+                                        DataCell(Text('')),
                                       ]),
                                     ],
                                   );
@@ -345,9 +330,9 @@ class _MgtStatisticState extends State<MgtStatistic> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    height: 250,
-                    width: 600,
-                    margin: const EdgeInsets.all(30.0),
+                    height: 420,
+                    width: 620,
+                    margin: const EdgeInsets.all(10.0),
                     decoration: BoxDecoration(
                         border:
                             Border.all(color: const Color.fromARGB(255, 0, 0, 0))),
@@ -366,70 +351,63 @@ class _MgtStatisticState extends State<MgtStatistic> {
                             )
                           ],
                         ),
-                        SizedBox(
-                          width: 250,
-                          child: FutureBuilder(
-                            future: mgtHandler.querySalesBrand(),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                return DataTable(columns: const [
-                                DataColumn(label: Text('브랜드 명')),
-                                DataColumn(label: Text('총 매출')),
-                              ], rows: [
-                                  DataRow(cells: [
-                                DataCell(Text(snapshot.data![0].brand.toString())),
-                                DataCell(Text(snapshot.data![0].totalSales.toString())),
-                              ]),
-                                  DataRow(cells: [
-                                DataCell(Text(snapshot.data![1].brand.toString())),
-                                DataCell(Text(snapshot.data![1].totalSales.toString())),
-                              ]),
-                                  DataRow(cells: [
-                                DataCell(Text(snapshot.data![2].brand.toString())),
-                                DataCell(Text(snapshot.data![2].totalSales.toString())),
-                              ]),
-                                ]);
-                              } else {
-                                return DataTable(
-                                  dividerThickness: 1,
-                                  // dataRowColor: const Color.fromARGB(255, 238, 238, 238),
-                                  columns: const [
-                                DataColumn(label: Text('브랜드 명')),
-                                DataColumn(label: Text('총 매출')),
-                                  ],
-                                  rows: const [
+                        Expanded(
+                          child: SizedBox(
+                            width: 500,
+                            child: FutureBuilder(
+                              future: mgtHandler.querySalesBrand(),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                                  return DataTable(columns: const [
+                                  DataColumn(label: Text('브랜드 명')),
+                                  DataColumn(label: Text('총 매출')),
+                                ], rows: [
                                     DataRow(cells: [
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                    ]),
+                                  DataCell(Text(snapshot.data![0].brand.toString())),
+                                  DataCell(Text(snapshot.data![0].totalSales.toString())),
+                                ]),
                                     DataRow(cells: [
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                    ]),
+                                  DataCell(Text(snapshot.data![1].brand.toString())),
+                                  DataCell(Text(snapshot.data![1].totalSales.toString())),
+                                ]),
                                     DataRow(cells: [
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                    ]),
-                                  ],
-                                );
-                              }
-                            },
+                                  DataCell(Text(snapshot.data![2].brand.toString())),
+                                  DataCell(Text(snapshot.data![2].totalSales.toString())),
+                                ]),
+                                  ]);
+                                } else {
+                                  return DataTable(
+                                    dividerThickness: 1,
+                                    // dataRowColor: const Color.fromARGB(255, 238, 238, 238),
+                                    columns: const [
+                                  DataColumn(label: Text('브랜드 명')),
+                                  DataColumn(label: Text('총 매출')),
+                                    ],
+                                    rows: const [
+                                      DataRow(cells: [
+                                        DataCell(Text('')),
+                                        DataCell(Text('')),
+                                      ]),
+                                    ],
+                                  );
+                                }
+                              },
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
                   Container(
-                    height: 250,
-                    width: 600,
-                    margin: const EdgeInsets.all(30.0),
+                    height: 420,
+                    width: 620,
+                    margin: const EdgeInsets.all(10.0),
                     decoration: BoxDecoration(
                         border:
                             Border.all(color: const Color.fromARGB(255, 0, 0, 0))),
                     child: Column(
                       children: [
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -441,110 +419,72 @@ class _MgtStatisticState extends State<MgtStatistic> {
                             )
                           ],
                         ),
-                        SizedBox(
-                          width: 250,
-                          child: FutureBuilder(
-                            future: mgtHandler.queryTopFiveAccount(),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                return DataTable(columns: const [
-                                DataColumn(label: Text('주문번호')),
-                                DataColumn(label: Text('주문자명')),
-                              ], rows: [
-                                  DataRow(cells: [
-                                DataCell(Text(snapshot.data![0].accountId.toString())),
-                                DataCell(Text(snapshot.data![0].accountName)),
-                                DataCell(Text(snapshot.data![0].purchaseCount.toString())),
-                                DataCell(Text(snapshot.data![0].totalSales.toString())),
-                              ]),
-                                  DataRow(cells: [
-                                DataCell(Text(snapshot.data![1].accountId.toString())),
-                                DataCell(Text(snapshot.data![1].accountName)),
-                                DataCell(Text(snapshot.data![1].purchaseCount.toString())),
-                                DataCell(Text(snapshot.data![1].totalSales.toString())),
-                              ]),
-                                  DataRow(cells: [
-                                DataCell(Text(snapshot.data![2].accountId.toString())),
-                                DataCell(Text(snapshot.data![2].accountName)),
-                                DataCell(Text(snapshot.data![2].purchaseCount.toString())),
-                                DataCell(Text(snapshot.data![2].totalSales.toString())),
-                              ]),
-                                  DataRow(cells: [
-                                DataCell(Text(snapshot.data![3].accountId.toString())),
-                                DataCell(Text(snapshot.data![3].accountName)),
-                                DataCell(Text(snapshot.data![3].purchaseCount.toString())),
-                                DataCell(Text(snapshot.data![3].totalSales.toString())),
-                              ]),
-                                  DataRow(cells: [
-                                DataCell(Text(snapshot.data![4].accountId.toString())),
-                                DataCell(Text(snapshot.data![4].accountName)),
-                                DataCell(Text(snapshot.data![4].purchaseCount.toString())),
-                                DataCell(Text(snapshot.data![4].totalSales.toString())),
-                              ]),
-                                ]);
-                              } else {
-                                return DataTable(
-                                  dividerThickness: 1,
-                                  // dataRowColor: const Color.fromARGB(255, 238, 238, 238),
-                                  columns: const [
-                                DataColumn(label: Text('주문번호')),
-                                DataColumn(label: Text('주문자명')),
-                                DataColumn(label: Text('전화번호')),
-                                DataColumn(label: Text('주문액')),
-                                DataColumn(label: Text('주문일')),
-                                DataColumn(label: Text('수령일')),
-                                DataColumn(label: Text('수령여부')),
-                                  ],
-                                  rows: const [
+                        Expanded(
+                          child: SizedBox(
+                            width: 500,
+                            child: FutureBuilder(
+                              future: mgtHandler.queryTopFiveAccount(),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                                  return DataTable(columns: const [
+                                  DataColumn(label: Text('주문번호')),
+                                  DataColumn(label: Text('주문자명')),
+                                  DataColumn(label: Text('주문수')),
+                                  DataColumn(label: Text('전체 매출')),
+                                ], rows: [
                                     DataRow(cells: [
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                    ]),
+                                  DataCell(Text(snapshot.data![0].accountId.toString())),
+                                  DataCell(Text(snapshot.data![0].accountName)),
+                                  DataCell(Text(snapshot.data![0].purchaseCount.toString())),
+                                  DataCell(Text(snapshot.data![0].totalSales.toString())),
+                                ]),
                                     DataRow(cells: [
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                    ]),
+                                  DataCell(Text(snapshot.data![1].accountId.toString())),
+                                  DataCell(Text(snapshot.data![1].accountName)),
+                                  DataCell(Text(snapshot.data![1].purchaseCount.toString())),
+                                  DataCell(Text(snapshot.data![1].totalSales.toString())),
+                                ]),
                                     DataRow(cells: [
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                    ]),
+                                  DataCell(Text(snapshot.data![2].accountId.toString())),
+                                  DataCell(Text(snapshot.data![2].accountName)),
+                                  DataCell(Text(snapshot.data![2].purchaseCount.toString())),
+                                  DataCell(Text(snapshot.data![2].totalSales.toString())),
+                                ]),
                                     DataRow(cells: [
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                    ]),
+                                  DataCell(Text(snapshot.data![3].accountId.toString())),
+                                  DataCell(Text(snapshot.data![3].accountName)),
+                                  DataCell(Text(snapshot.data![3].purchaseCount.toString())),
+                                  DataCell(Text(snapshot.data![3].totalSales.toString())),
+                                ]),
                                     DataRow(cells: [
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                      DataCell(Text('0')),
-                                    ]),
-                                  ],
-                                );
-                              }
-                            },
+                                  DataCell(Text(snapshot.data![4].accountId.toString())),
+                                  DataCell(Text(snapshot.data![4].accountName)),
+                                  DataCell(Text(snapshot.data![4].purchaseCount.toString())),
+                                  DataCell(Text(snapshot.data![4].totalSales.toString())),
+                                ]),
+                                  ]);
+                                } else {
+                                  return DataTable(
+                                    dividerThickness: 1,
+                                    // dataRowColor: const Color.fromARGB(255, 238, 238, 238),
+                                    columns: const [
+                                  DataColumn(label: Text('주문번호')),
+                                  DataColumn(label: Text('주문자명')),
+                                  DataColumn(label: Text('주문수')),
+                                  DataColumn(label: Text('전체 매출')),
+                                    ],
+                                    rows: const [
+                                      DataRow(cells: [
+                                        DataCell(Text('')),
+                                        DataCell(Text('')),
+                                        DataCell(Text('')),
+                                        DataCell(Text('')),
+                                      ]),
+                                    ],
+                                  );
+                                }
+                              },
+                            ),
                           ),
                         ),
                       ],

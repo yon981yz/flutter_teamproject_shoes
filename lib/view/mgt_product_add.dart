@@ -61,7 +61,7 @@ class _MgtProductAddState extends State<MgtProductAdd> {
                             onPressed: () {
                               getImageFromGallery(ImageSource.gallery);
                             },
-                            child: const Text('image')),
+                            child: const Text('이미지')),
                       ),
                       Container(
                         width: 200,
@@ -69,7 +69,7 @@ class _MgtProductAddState extends State<MgtProductAdd> {
                         color: Colors.grey,
                         child: Center(
                           child: imageFile == null
-                              ? const Text('image is not selected.')
+                              ? const Text('이미지를 선택해주세요')
                               : Image.file(File(imageFile!.path)
                               ),
                         ),
@@ -80,7 +80,7 @@ class _MgtProductAddState extends State<MgtProductAdd> {
                             onPressed: () {
                               getlogoFromGallery(ImageSource.gallery);
                             },
-                            child: const Text('logo')),
+                            child: const Text('브랜드 로고')),
                       ),
                       Container(
                         width: 200,
@@ -88,7 +88,7 @@ class _MgtProductAddState extends State<MgtProductAdd> {
                         color: Colors.grey,
                         child: Center(
                           child: logoFile == null
-                              ? const Text('logo is not selected.')
+                              ? const Text('브랜드 로고를 선택해주세요')
                               : Image.file(File(logoFile!.path)
                               ),
                         ),
@@ -106,7 +106,7 @@ class _MgtProductAddState extends State<MgtProductAdd> {
                       child: TextField(
                         controller: nameController,
                         decoration: const InputDecoration(
-                            labelText: 'please input name'),
+                            labelText: '품명을 입력해주세요'),
                       ),
                     ),
                   ),
@@ -115,9 +115,10 @@ class _MgtProductAddState extends State<MgtProductAdd> {
                     child: SizedBox(
                       width: 300,
                       child: TextField(
+                        keyboardType: TextInputType.number,
                         controller: sizeController,
                         decoration:
-                            const InputDecoration(labelText: 'please input size'),
+                            const InputDecoration(labelText: '사이즈를 입력해주세요'),
                       ),
                     ),
                   ),
@@ -126,9 +127,10 @@ class _MgtProductAddState extends State<MgtProductAdd> {
                     child: SizedBox(
                       width: 300,
                       child: TextField(
+                        keyboardType: TextInputType.number,
                         controller: salespriceController,
                         decoration: const InputDecoration(
-                            labelText: 'please salesprice address'),
+                            labelText: '가격을 입력해주세요'),
                       ),
                     ),
                   ),
@@ -139,7 +141,7 @@ class _MgtProductAddState extends State<MgtProductAdd> {
                       child: TextField(
                         controller: colorController,
                         decoration: const InputDecoration(
-                            labelText: 'please color relation'),
+                            labelText: '색상을 입력해주세요'),
                       ),
                     ),
                   ),
@@ -150,7 +152,7 @@ class _MgtProductAddState extends State<MgtProductAdd> {
                       child: TextField(
                         controller: brandController,
                         decoration: const InputDecoration(
-                            labelText: 'please brand relation'),
+                            labelText: '브랜드를 입력해주세요'),
                       ),
                     ),
                   ),
