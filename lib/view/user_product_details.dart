@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_teamproject_shoes/model/purchase.dart';
 import 'package:flutter_teamproject_shoes/model/shoes.dart';
 import 'package:flutter_teamproject_shoes/vm/SY.dart';
-import 'package:flutter_teamproject_shoes/vm/database_handler.dart';
 
 class UserProductDetailsPage extends StatefulWidget {
   final int purchaseId;
