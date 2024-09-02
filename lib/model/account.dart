@@ -1,11 +1,11 @@
-class Accout{
+class Account{
   final String id;
   final String name;
   final String phone;
   final String password;
   
 
-  Accout(
+  Account(
     {
       required this.id,
       required this.name,
@@ -14,7 +14,7 @@ class Accout{
     }
   );
 
-  Accout.fromMap(Map<String, dynamic> acs)
+  Account.fromMap(Map<String, dynamic> acs)
   : id = acs['id'],
   name = acs['name'],
   phone = acs['phone'],
