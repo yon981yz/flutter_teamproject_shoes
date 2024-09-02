@@ -60,7 +60,7 @@ Future<List<Shoes>> queryShoesHome() async{
 Future<List<Shoes>> queryShoesHomeSearch(String name) async{
     final Database db = await databaseHandler.initializeDB();
     final List<Map<String, Object?>> queryResult =
-      await db.rawQuery('select * from shoes group by image where name like ?',
+      await db.rawQuery('select * from shoes where name like ? group by image',
       ['%$name%']);
       return queryResult.map((e) => Shoes.fromMap(e)).toList();
   }

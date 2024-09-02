@@ -1,5 +1,5 @@
 class Accout{
-  final int? id;
+  final String id;
   final String name;
   final String phone;
   final String password;
@@ -7,7 +7,7 @@ class Accout{
 
   Accout(
     {
-      this.id,
+      required this.id,
       required this.name,
       required this.phone,
       required this.password,
