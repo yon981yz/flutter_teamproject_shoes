@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_teamproject_shoes/model/branch.dart';
 import 'package:flutter_teamproject_shoes/view/cust_home.dart';
 import 'package:flutter_teamproject_shoes/view/mgt_home.dart';
 import 'package:flutter_teamproject_shoes/view/user_login.dart';
+import 'package:flutter_teamproject_shoes/vm/database_handler.dart';
+import 'package:flutter_teamproject_shoes/vm/kiosk_handler.dart';
 import 'package:get/get.dart';
 
 class Home extends StatefulWidget {
@@ -12,6 +15,28 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+DatabaseHandler handler = DatabaseHandler();
+KioskHandler kioskHandler = KioskHandler();
+
+@override
+  void initState() {
+    super.initState();
+  addBranch();
+  }
+
+  Future <void>addBranch()async{
+      List<Branch> name = [
+      Branch(name: '강남점'),
+      Branch(name: '신사점'),
+      Branch(name: '잠실점'),
+    ];
+    await kioskHandler.insertBranches(name);
+    print(name);
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,4 +82,7 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-}
+
+  // -- Functions --
+
+}// END
