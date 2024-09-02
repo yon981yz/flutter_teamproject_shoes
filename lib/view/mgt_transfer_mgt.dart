@@ -76,7 +76,7 @@ class _MgtTransferMgtState extends State<MgtTransferMgt> {
                           DataCell(Text(transfer.shoesid.toString())),
                           DataCell(Text(transfer.shoesname)),
                           DataCell(Text(transfer.branchname)),
-                          DataCell(Text(transfer.collection)),
+                          DataCell(Text(transfer.collectionstatus)),
                         ]);
                       }).toList();
                       return DataTable(
