@@ -12,9 +12,9 @@ class _UserChoiceBranchPageState extends State<UserChoiceBranchPage> {
 
   Future<List<Branch>> _getBranches() async {
     List<Branch> branches = [
-      Branch(id: 1, address: "SB Market 신사점"),
-      Branch(id: 2, address: "SB Market 잠실점"),
-      Branch(id: 3, address: "SB Market 강남점"),
+      Branch(id: 1, name: "SB Market 신사점"),
+      Branch(id: 2, name: "SB Market 잠실점"),
+      Branch(id: 3, name: "SB Market 강남점"),
     ];
     return branches;
   }
@@ -38,7 +38,7 @@ class _UserChoiceBranchPageState extends State<UserChoiceBranchPage> {
               itemBuilder: (context, index) {
                 final branch = snapshot.data![index];
                 return RadioListTile<Branch>(
-                  title: Text(branch.address),
+                  title: Text(branch.name),
                   value: branch,
                   groupValue: _selectedBranch,
                   onChanged: (Branch? value) {

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_teamproject_shoes/model/branch.dart';
 import 'package:flutter_teamproject_shoes/model/purchase.dart';
 import 'package:flutter_teamproject_shoes/vm/SY.dart';
+import 'package:flutter_teamproject_shoes/vm/database_handler.dart';
+import 'package:get/get.dart';
 
 class UserCompliteProduct extends StatefulWidget {
   const UserCompliteProduct({super.key});
@@ -11,9 +13,40 @@ class UserCompliteProduct extends StatefulWidget {
 }
 
 class _UserCompliteProductState extends State<UserCompliteProduct> {
+  // Property
+  
+  var value = Get.arguments ?? '__';
+  DatabaseHandler handler = DatabaseHandler();
+  
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+        appBar: AppBar(
+      title: const Column(
+        children: [
+          Text(
+            'SB Market',
+            style: TextStyle(
+                color: Color(0xFF776661),
+                fontSize: 27,
+                fontFamily: 'Figma Hand',
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic),
+          ),
+        ],
+      ),
+    ),
+    body: Center(
+      child: Column(
+        children: [
+          Text('구매가 확정 되었습니다.'),
+          Text('주문번호'),
+
+          Text('매장 키오스크를 \n 이용하여 제품을 수령하세요')
+        ],
+      ),
+    ),
+    );
   }
 }class UserCompliteProductPage extends StatefulWidget {
   final int purchaseId;
@@ -66,7 +99,7 @@ class _UserCompliteProductPageState extends State<UserCompliteProductPage> {
                   SizedBox(height: 10),
                   Text('수령 여부: ${purchase.collectionstatus}', style: TextStyle(fontSize: 18)), 
                   SizedBox(height: 10),
-                  Text('선택된 매장: ${widget.selectedBranch.address}', style: TextStyle(fontSize: 18)), 
+                  Text('선택된 매장: ${widget.selectedBranch.name}', style: TextStyle(fontSize: 18)), 
                   SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
