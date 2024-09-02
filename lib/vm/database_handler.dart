@@ -55,12 +55,12 @@ class DatabaseHandler{
             account_id TEXT,
             shoes_id INTEGER,
             branch_id INTEGER,
-            salesprice TEXT,
+            salesprice INTEGER,
             purchasedate DATE,
             collectiondate DATE,
             collectionstatus TEXT,
-            FOREIGN KEY(account_id) REFERENCES user_account(id),
-            FOREIGN KEY(shoes_id) REFERENCES account(id),
+            FOREIGN KEY(account_id) REFERENCES account(id),
+            FOREIGN KEY(shoes_id) REFERENCES shoes(id),
             FOREIGN KEY(branch_id) REFERENCES branch(id)
           )
         """);
@@ -71,10 +71,10 @@ class DatabaseHandler{
           CREATE TABLE transfer (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             shoes_id INTEGER,
-            branch_id TEXT,
+            branch_id INTEGER,
             date DATE,
             collectionstatus TEXT,
-            FOREIGN KEY(shoes_id) REFERENCES account(id),
+            FOREIGN KEY(shoes_id) REFERENCES shoes(id),
             FOREIGN KEY(branch_id) REFERENCES branch(id)
           )
         """);

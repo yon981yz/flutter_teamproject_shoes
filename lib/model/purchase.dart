@@ -12,7 +12,8 @@ class Purchase {
       required this.salesprice,
       this.purchasedate,
       this.collectiondate,
-      required this.collectionstatus
+      required this.collectionstatus,
+
     }
   );
 

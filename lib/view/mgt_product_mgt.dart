@@ -19,7 +19,7 @@ class _MgtProductMgtState extends State<MgtProductMgt> {
     late MgtHandler mgtHandler;
     late TextEditingController searchEditingController;
     late Future<List<Shoes>> searchFuture;
-    late Future<List<Shoes>> searchFutureNike;
+    late Future<List<Shoes>> searchFutureName;
     late CustomerHandler customerHandler; 
 
 
@@ -28,38 +28,19 @@ class _MgtProductMgtState extends State<MgtProductMgt> {
     super.initState();
     kioskHandler = KioskHandler();
     mgtHandler = MgtHandler();
-    searchEditingController = TextEditingController();
-    searchFuture = Future.value([]); 
-    searchFutureNike = Future.value([]);
     customerHandler = CustomerHandler();
+
+    searchEditingController = TextEditingController();
+
+    searchFutureName = Future.value([]);
   }
 
-  performSearch() {
-    final searchText = searchEditingController.text.trim();
-    if (searchText.isNotEmpty) {
-      // Assuming the id is an integer
-      final id = int.tryParse(searchText);
-      if (id != null) {
-        searchFuture = kioskHandler.queryTest(id);
-        setState(() {});
-      } else {
-        // Handle invalid id input
-        searchFuture = Future.value([]);
-        setState(() {});
-      }
-    } else {
-      // Handle empty search case
-      searchFuture = Future.value([]);
-      setState(() {});
-    }
-  }
-
-  void performSearchNike() {
+  void performSearchName() {
     final searchText = searchEditingController.text.trim();
       if (searchText.isNotEmpty) {
-        searchFutureNike = customerHandler.queryNikeSearch(searchText);
+        searchFutureName = mgtHandler.queryShoesSearch(searchText);
       } else {
-        searchFutureNike = Future.value([]);
+        searchFutureName = Future.value([]);
       }
       setState(() {});
   }
@@ -86,178 +67,146 @@ class _MgtProductMgtState extends State<MgtProductMgt> {
         child: Center(
           child: Column(
             children: [
-              TextField(
-                controller: searchEditingController,
-                decoration: InputDecoration(
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      performSearchNike();
-                    },
-                    icon: const Icon(Icons.search)
+              
+              Padding(
+                padding: const EdgeInsets.fromLTRB(40,40,40,40),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset(
+                        'images/Rectangle.png'
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text('최근 주문 및 수령 검색'),
+                    ),
+                  ],
+                ),
+              ),
+              
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                child: SizedBox(
+                  width: 500,
+                  height: 40,
+                  child: TextField(
+                    controller: searchEditingController,
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          performSearchName();
+                        },
+                        icon: const Icon(Icons.search)
+                      ),
+                    ),
                   ),
                 ),
               ),
 
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 100, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          Get.to(() => const MgtProductAdd())!
+                              .then((value) => reloadData());
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                          foregroundColor: Colors.white,
+                        ),
+                        child: const Text('상품추가 +')),
+                  ],
+                ),
+              ),
               searchEditingController.text.trim().isEmpty
               ? SizedBox(
-                height: 500,
-                child: FutureBuilder(
-                  future: customerHandler.queryShoesHome(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return ListView.builder(
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            child: Row(
-                              children: [
-                                Image.memory(
-                                  snapshot.data![index].image,
-                                  width: 100,
-                                ),
-                                Text(snapshot.data![index].name)
-                              ],
-                            ),
-                          );
-                        },
-                      );
-                    } else {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  },
-                ),
-              )
-              : SizedBox(
-                height: 500,
+                width: 1200,
+                height: 700,
                 child: FutureBuilder<List<Shoes>>(
-                  future: searchFutureNike,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return ListView.builder(
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            child: Row(
-                              children: [
-                                Image.memory(
-                                  snapshot.data![index].image,
-                                  width: 100,
-                                ),
-                                Text(snapshot.data![index].name)
-                              ],
+                    future: mgtHandler.queryShoes(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        final data = snapshot.data!;
+                        List<DataRow> rows = data.map((shoes) {
+                          return DataRow(cells: [
+                            DataCell(
+                              Image.memory(
+                                shoes.image,
+                                width: 100,
+                                height: 50,
+                              )
                             ),
-                          );
-
-                        },
-                      );
-                    } else {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  },
-                ),
+                            DataCell(Text(shoes.brand)),
+                            DataCell(Text(shoes.id.toString())),
+                            DataCell(Text(shoes.name)),
+                            DataCell(Text(shoes.salesprice.toString())),
+                          ]);
+                        }).toList();
+                        return DataTable(
+                          columns: const [
+                            DataColumn(label: Text('이미지')),
+                            DataColumn(label: Text('제조사')),
+                            DataColumn(label: Text('품번')),
+                            DataColumn(label: Text('제품명')),
+                            DataColumn(label: Text('원가')),
+                          ],
+                          rows: rows,
+                        );
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                  }),
               )
 
-
-
-             // search (등록번호)
-            
-            //   searchEditingController.text.trim().isEmpty
-            //   ? SizedBox(
-            //     height: 500,
-            //     child: FutureBuilder(
-            //       future: mgtHandler.queryShoes(),
-            //       builder: (context, snapshot) {
-            //         if (snapshot.hasData) {
-            //           return ListView.builder(
-            //             itemCount: snapshot.data!.length,
-            //             itemBuilder: (context, index) {
-            //               return Card(
-            //                 child: Row(
-            //                   children: [
-            //                     Image.memory(
-            //                       snapshot.data![index].image,
-            //                       width: 100,
-            //                     ),
-            //                     Text(snapshot.data![index].name)
-            //                   ],
-            //                 ),
-            //               );
-            //             },
-            //           );
-            //         } else {
-            //           return const Center(
-            //             child: CircularProgressIndicator(),
-            //           );
-            //         }
-            //       },
-            //     ),
-            //   )
-            // : SizedBox(
-            //     height: 500,
-            //     child: FutureBuilder<List<Shoes>>(
-            //       future: searchFuture,
-            //       builder: (context, snapshot) {
-            //         if (snapshot.hasData) {
-            //           return ListView.builder(
-            //             itemCount: snapshot.data!.length,
-            //             itemBuilder: (context, index) {
-            //               return Card(
-            //                 child: Row(
-            //                   children: [
-            //                     Image.memory(
-            //                       snapshot.data![index].image,
-            //                       width: 100,
-            //                     ),
-            //                     Text(snapshot.data![index].name)
-            //                   ],
-            //                 ),
-            //               );
-            //             },
-            //           );
-            //         } else {
-            //           return const Center(
-            //             child: CircularProgressIndicator(),
-            //           );
-            //         }
-            //       },
-            //     ),
-            //   )
-
-              
-              // SizedBox(
-              //   height: 500,
-              //   child: FutureBuilder(
-              //     future: mgtHandler.queryShoes(),
-              //     builder: (context, snapshot) {
-              //       if (snapshot.hasData) {
-              //         return ListView.builder(
-              //           itemCount: snapshot.data!.length,
-              //           itemBuilder: (context, index) {
-              //             return Card(
-              //               child: Row(
-              //                 children: [
-              //                   Image.memory(
-              //                     snapshot.data![index].image,
-              //                     width: 100,
-              //                   ),
-              //                   Text(snapshot.data![index].name)
-              //                 ],
-              //               ),
-              //             );
-              //           },
-              //         );
-              //       } else {
-              //         return const Center(
-              //           child: CircularProgressIndicator(),
-              //         );
-              //       }
-              //     },
-              //   ),
-              // ),
+            : SizedBox(
+                width: 1200,
+                height: 700,
+                child: FutureBuilder<List<Shoes>>(
+                    future: searchFutureName,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        final data = snapshot.data!;
+                        List<DataRow> rows = data.map((shoes) {
+                          return DataRow(cells: [
+                            DataCell(
+                              Image.memory(
+                                shoes.image,
+                                width: 100,
+                                height: 50,
+                              )
+                            ),
+                            DataCell(Text(shoes.brand)),
+                            DataCell(Text(shoes.id.toString())),
+                            DataCell(Text(shoes.name)),
+                            DataCell(Text(shoes.salesprice.toString())),
+                          ]);
+                        }).toList();
+                        return DataTable(
+                          columns: const [
+                            DataColumn(label: Text('이미지')),
+                            DataColumn(label: Text('제조사')),
+                            DataColumn(label: Text('품번')),
+                            DataColumn(label: Text('제품명')),
+                            DataColumn(label: Text('원가')),
+                          ],
+                          rows: rows,
+                        );
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                  }),
+              ),
+        
             ],
           ),
         ),
