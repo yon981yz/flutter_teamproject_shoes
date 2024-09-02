@@ -196,7 +196,7 @@ class SHandler{
     final db = await databaseHandler.initializeDB();
     return await db.insert('transfer', {
       'date': transfer.date,
-      'collection': transfer.collection,
+      'collection': transfer.collectionstatus,
     });
   }
 
@@ -214,7 +214,7 @@ class SHandler{
       'transfer',
       {
         'date': transfer.date,
-        'collection': transfer.collection,
+        'collection': transfer.collectionstatus,
       },
       where: 'id = ?',
       whereArgs: [transfer.id],

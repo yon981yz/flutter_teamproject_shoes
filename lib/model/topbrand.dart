@@ -9,5 +9,5 @@ class Topbrand {
 
   Topbrand.fromMap(Map<String, dynamic> res)
   : brand = res['brand'],
-  totalSales = res['totalSales'];
+  totalSales = res['totalsales'];
 }

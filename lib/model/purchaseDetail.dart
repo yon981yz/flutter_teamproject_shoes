@@ -30,14 +30,14 @@ class PurchaseDetail{
 
   PurchaseDetail.fromMap(Map<String, dynamic> res)
   : id = res['id'],
+  accountName = res['accountname'],
+  accountPhone = res['accountphone'],
+  shoesName = res['shoesname'],
+  shoesSize = res['shoessize'],
+  shoesColor = res['shoescolor'],
+  shoesBrand = res['shoesbrand'],
   salesprice = res['salesprice'],
   purchasedate = res['purchasedate'],
   collectiondate = res['collectiondate'],
-  collectionstatus = res['collectionstatus'],
-  accountName = res['account_name'],
-  accountPhone = res['account_phone'],
-  shoesName = res['shoes_name'],
-  shoesSize = res['shoes_size'],
-  shoesColor = res['shoes_color'],
-  shoesBrand = res['shoes_brand'];
+  collectionstatus = res['collectionstatus'];
 }

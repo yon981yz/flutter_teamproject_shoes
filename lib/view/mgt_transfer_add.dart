@@ -17,7 +17,6 @@ class _MgtTransferAddState extends State<MgtTransferAdd> {
   late TextEditingController dateController;
   late TextEditingController collectionController;
   late TextEditingController shoesNumberController;
-  late TextEditingController brandController;
   late DateTime _selectedDate;
   late int radioValue;
 
@@ -29,7 +28,6 @@ class _MgtTransferAddState extends State<MgtTransferAdd> {
     dateController = TextEditingController();
     collectionController = TextEditingController();
     shoesNumberController = TextEditingController();
-    brandController = TextEditingController();
     _selectedDate = DateTime.now();
     radioValue = 0;
 
@@ -148,8 +146,8 @@ class _MgtTransferAddState extends State<MgtTransferAdd> {
     var transInsert = Transfer(
       date: dateController.text.trim(),
       shoesid: int.parse(shoesNumberController.text.trim()),
-      branchid: radioValue,
-      collection: brandController.text.trim(),
+      branchid: radioValue+1,
+      collectionstatus: collectionController.text.trim(),
     );
     int result = await mgtHandler.insertTransfer(transInsert);
     if (result != 0) {

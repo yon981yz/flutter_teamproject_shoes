@@ -1,7 +1,7 @@
 class Transfersummary {
   final int? id;
   final String date;
-  final String collection;
+  final String collectionstatus;
   final int shoesid;
   final String branchname;
   final String shoesname;
@@ -10,7 +10,7 @@ class Transfersummary {
   Transfersummary({
     this.id,
     required this.date,
-    required this.collection,
+    required this.collectionstatus,
     required this.shoesid,
     required this.branchname,
     required this.shoesname,
@@ -19,7 +19,7 @@ class Transfersummary {
   Transfersummary.fromMap(Map<String, dynamic> tfs)
     : id = tfs['id'],
       date = tfs['date'],
-      collection = tfs['collection'],
+      collectionstatus = tfs['collectionstatus'],
       shoesid = tfs['shoesid'],
       branchname = tfs['branchname'],
       shoesname = tfs['shoesname'];
