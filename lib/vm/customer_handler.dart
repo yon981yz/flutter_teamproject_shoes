@@ -95,12 +95,19 @@ Future<List<Account>> queryMyinfo(String id) async{
 
   ///// 신발 이미지로 정렬 (고객 구매 페이지 디스플레이) 
 
-Future<List<Shoes>> queryShoesHome() async{
-    final Database db = await databaseHandler.initializeDB();
-    final List<Map<String, Object?>> queryResult =
-      await db.rawQuery('select * from shoes group by image');
-      return queryResult.map((e) => Shoes.fromMap(e)).toList();
-  }
+Future<List<Shoes>> queryShoesHome() async {
+  final Database db = await databaseHandler.initializeDB();
+  final List<Map<String, Object?>> queryResult =
+      await db.rawQuery('SELECT DISTINCT image, name, size, color, salesprice, logo, brand FROM shoes');
+  return queryResult.map((e) => Shoes.fromMap(e)).toList();
+}
+
+// Future<List<Shoes>> queryShoesHome() async{
+//     final Database db = await databaseHandler.initializeDB();
+//     final List<Map<String, Object?>> queryResult =
+//       await db.rawQuery('select DISTINCT from shoes group by image');
+//       return queryResult.map((e) => Shoes.fromMap(e)).toList();
+//   }
 
 // 동일 이미지별 신발 사이즈 불러오기
 Future<List<int>> queryShoesSize(Uint8List image) async{
@@ -110,14 +117,23 @@ Future<List<int>> queryShoesSize(Uint8List image) async{
       [image]);
       return queryResult.map((e) => e['size'] as int).toList();
   }
+
+
 // Dropdown에서 사이즈 선택된 상품으로 받아오기 
-  Future<List<Shoes>> querySelectshoe(Uint8List image, int size) async{
-    final Database db = await databaseHandler.initializeDB();
-    final List<Map<String, Object?>> queryResult =
-      await db.rawQuery('select *from shoes where image=? and size=?',
-      [image, size]);
-      return queryResult.map((e) => Shoes.fromMap(e)).toList();  
-  }
+Future<List<Shoes>> querySelectshoe(Uint8List image, int size) async {
+  final Database db = await databaseHandler.initializeDB();
+  final List<Map<String, Object?>> queryResult =
+      await db.rawQuery('SELECT DISTINCT * FROM shoes WHERE image = ? AND size = ?', [image, size]);
+  return queryResult.map((e) => Shoes.fromMap(e)).toList();  
+}
+
+  // Future<List<Shoes>> querySelectshoe(Uint8List image, int size) async{
+  //   final Database db = await databaseHandler.initializeDB();
+  //   final List<Map<String, Object?>> queryResult =
+  //     await db.rawQuery('select DISTINCT from shoes where image=? and size=?',
+  //     [image, size]);
+  //     return queryResult.map((e) => Shoes.fromMap(e)).toList();  
+  // }
 
 Future<List<Shoes>> queryBrandSearch(String brand, String name) async{
     final Database db = await databaseHandler.initializeDB();

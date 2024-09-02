@@ -4,6 +4,7 @@ import 'package:flutter_teamproject_shoes/model/purchase.dart';
 import 'package:flutter_teamproject_shoes/model/shoes.dart';
 import 'package:flutter_teamproject_shoes/model/transfer.dart';
 import 'package:flutter_teamproject_shoes/vm/database_handler.dart';
+
 final DatabaseHandler databaseHandler = DatabaseHandler();
 
 class SHandler{
@@ -108,7 +109,7 @@ class SHandler{
   Future<int> insertBranch(Branch branch) async {
     final db = await databaseHandler.initializeDB();
     return await db.insert('branch', {
-      'address': branch.address,
+      'address': branch.name,
     });
   }
 
@@ -125,7 +126,7 @@ class SHandler{
     return await db.update(
       'branch',
       {
-        'address': branch.address,
+        'address': branch.name,
       },
       where: 'id = ?',
       whereArgs: [branch.id],
