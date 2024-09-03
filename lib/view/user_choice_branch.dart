@@ -58,57 +58,101 @@ class _UserChoiceBranchState extends State<UserChoiceBranch> {
       body: Center(
         child: Column(
           children: [
-            Text('매장 위치 선택'),
-            Row(
-              children: [
-                Radio(
-                  value: 0, 
-                  groupValue: radioValue, 
-                  onChanged: (value) {
-                    radioChange(value);
-                  },),
-                  Text('SB Market 강남점')
-              ],
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text('매장 위치 선택',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold
+              ),
+              ),
             ),
-            Row(
-              children: [
-                Radio(
-                  value: 1, 
-                  groupValue: radioValue, 
-                  onChanged: (value) {
-                    radioChange(value);
-                  },),
-                  Text('SB Market 신사점')                  
-              ],
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Row(
+                children: [
+                  Radio(
+                    value: 0, 
+                    groupValue: radioValue, 
+                    onChanged: (value) {
+                      radioChange(value);
+                    },),
+                    Text('SB Market 강남점',
+                    style: TextStyle(
+                      fontSize: 17,
+                    ),
+                    )
+                ],
+              ),
             ),
-            Row(
-              children: [
-                Radio(
-                  value: 2,
-                  groupValue: radioValue, 
-                  onChanged: (value) {
-                    radioChange(value);
-                  },),
-                  Text('SB Market 잠실점'),                  
-              ],
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Row(
+                children: [
+                  Radio(
+                    value: 1, 
+                    groupValue: radioValue, 
+                    onChanged: (value) {
+                      radioChange(value);
+                    },),
+                    Text('SB Market 신사점',
+                    style: TextStyle(
+                      fontSize: 17
+                    ),
+                    )                  
+                ],
+              ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                insertAction();
-                Get.to(UserCompliteProduct(),
-                arguments: [
-                    value[0],
-                    value[1],
-                    value[2],
-                    value[3],
-                    value[4],
-                    value[5],
-                    value[6],
-                    value[7],
-                ]
-                );
-              }, 
-              child: Text('구매 확정'))
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Row(
+                children: [
+                  Radio(
+                    value: 2,
+                    groupValue: radioValue, 
+                    onChanged: (value) {
+                      radioChange(value);
+                    },),
+                    Text('SB Market 잠실점',
+                    style: TextStyle(
+                      fontSize: 17
+                    ),
+                    ),                  
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  backgroundColor: const Color(0xFF8E807C)
+                ),                           
+                onPressed: () {
+                  insertAction();
+                  Get.to(UserCompliteProduct(),
+                  arguments: [
+                      value[0],
+                      value[1],
+                      value[2],
+                      value[3],
+                      value[4],
+                      value[5],
+                      value[6],
+                      value[7],
+                  ]
+                  );
+                }, 
+                child: Text('구매 확정',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white
+                ),
+                )
+                ),
+            )
           ],
         ),
       ),
