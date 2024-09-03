@@ -160,7 +160,7 @@ Future<List<PurchaseSummary>> querySalesMonth() async{
     final Database db = await databaseHandler.initializeDB();
     final List<Map<String, Object?>> queryResult =
       await db.rawQuery('''
-      SELECT count(id), sum(salesprice) 
+      SELECT count(id) as count , sum(salesprice) as total
       FROM purchase 
       WHERE strftime('%Y-%m', purchasedate) = strftime('%Y-%m', 'now', 'localtime')
       ''');
@@ -174,7 +174,12 @@ Future<List<Topfiveshoes>> queryTopFiveShoes() async{
     final List<Map<String, Object?>> queryResult =
       await db.rawQuery('''
     SELECT 
-      s.image, s.id, s.name, s.brand, COUNT(p.id) as totalorder, SUM(p.salesprice) as totalsales
+      s.image as image, 
+      s.id as shoesid,
+      s.name as shoesname,
+      s.brand as shoesbrand,
+      COUNT(p.id) as totalorder, 
+      SUM(p.salesprice) as totalsales
     FROM shoes s, purchase p
     WHERE s.id = p.shoes_id and
       strftime('%Y-%m', purchasedate) = strftime('%Y-%m', 'now', 'localtime')
@@ -198,6 +203,7 @@ Future<List<Topbrand>> querySalesBrand() async{
       strftime('%Y-%m', purchasedate) = strftime('%Y-%m', 'now', 'localtime')
     GROUP BY s.brand
     ORDER BY totalsales DESC
+    LIMIT 3
       ''');
       return queryResult.map((e) => Topbrand.fromMap(e)).toList();
   }
