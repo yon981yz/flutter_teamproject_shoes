@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_teamproject_shoes/model/purchase.dart';
-import 'package:flutter_teamproject_shoes/view/user_complite_product.dart';
+import 'package:flutter_teamproject_shoes/view/user_complete_product.dart';
 import 'package:flutter_teamproject_shoes/vm/customer_handler.dart';
 import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
@@ -43,7 +43,7 @@ class _UserChoiceBranchState extends State<UserChoiceBranch> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Column(children: [
+        title: const Column(children: [
           Text(
             'SB Market',
             style: TextStyle(
@@ -55,14 +55,14 @@ class _UserChoiceBranchState extends State<UserChoiceBranch> {
           ),
         ]),
         toolbarHeight: 100,
-        backgroundColor: Color(0xFFCFD2A5),
+        backgroundColor: const Color(0xFFCFD2A5),
       ),
       backgroundColor: Colors.white,
       body: Center(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(20.0),
+            const Padding(
+              padding: EdgeInsets.all(20.0),
               child: Text('매장 위치 선택',
               style: TextStyle(
                 fontSize: 20,
@@ -80,7 +80,7 @@ class _UserChoiceBranchState extends State<UserChoiceBranch> {
                     onChanged: (value) {
                       radioChange(value);
                     },),
-                    Text('SB Market 강남점',
+                    const Text('SB Market 강남점',
                     style: TextStyle(
                       fontSize: 17,
                     ),
@@ -98,7 +98,7 @@ class _UserChoiceBranchState extends State<UserChoiceBranch> {
                     onChanged: (value) {
                       radioChange(value);
                     },),
-                    Text('SB Market 신사점',
+                    const Text('SB Market 신사점',
                     style: TextStyle(
                       fontSize: 17
                     ),
@@ -116,7 +116,7 @@ class _UserChoiceBranchState extends State<UserChoiceBranch> {
                     onChanged: (value) {
                       radioChange(value);
                     },),
-                    Text('SB Market 잠실점',
+                    const Text('SB Market 잠실점',
                     style: TextStyle(
                       fontSize: 17
                     ),
@@ -135,7 +135,7 @@ class _UserChoiceBranchState extends State<UserChoiceBranch> {
                 ),                           
                 onPressed: () {
                   insertAction();
-                  Get.to(UserCompliteProduct(),
+                  Get.to(const UserCompleteProduct(),
                   arguments: [
                       value[0],
                       value[1],
@@ -148,7 +148,7 @@ class _UserChoiceBranchState extends State<UserChoiceBranch> {
                   ]
                   );
                 }, 
-                child: Text('구매 확정',
+                child: const Text('구매 확정',
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.white

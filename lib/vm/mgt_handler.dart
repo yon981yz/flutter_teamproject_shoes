@@ -53,7 +53,6 @@ Future<List<PurchaseDetail>> queryPurchaseDetails() async {
     FROM purchase p, shoes s, account a 
     WHERE p.account_id = a.id and
       p.shoes_id = s.id and
-      a.name like ?
       order by p.purchasedate
   ''');
   
@@ -78,9 +77,11 @@ Future<List<PurchaseDetail>> queryPurchaseDetailsSearch(String name) async {
       p.collectionstatus as collectionstatus
     FROM purchase p, shoes s, account a 
     WHERE p.account_id = a.id and
-      p.shoes_id = s.id
+      p.shoes_id = s.id and
+      a.name like ?
       order by p.purchasedate
-  ''');
+      ''',
+      ['%$name%']);
   
   return queryResult.map((e) => PurchaseDetail.fromMap(e)).toList();
 }
@@ -247,7 +248,7 @@ Future<List<Transfersummary>> queryTransfer() async {
   final Database db = await databaseHandler.initializeDB();
   final List<Map<String, Object?>> queryResult =
     await db.rawQuery('''
-    SELECT t.id, b.name as branchname, s.id as shoesid, s.name as shoesname, t.date, t.collectionstatus
+    SELECT t.id, b.name as branchname, s.id as shoesid, s.name as shoesname, t.date, t.collectionstatus, b.id as branchid
     FROM transfer t, shoes s, branch b
     WHERE b.id = t.branch_id and s.id = t.shoes_id
     ''');
@@ -278,6 +279,23 @@ Future<List<Transfersummary>> queryTransfer() async {
 
   }
 
+// 배송 수령
+  Future<int> updateTransfer(Transfer transfer) async {
+    int result = 0;
+    final Database db = await databaseHandler.initializeDB();
+    result = await db.rawUpdate(
+      """
+      update transfer
+      set collectionstatus = ?
+
+
+      where id = ?
+      """, [
+        transfer.collectionstatus, transfer.id
+      ]
+    );
+    return result;
+  }
 
 }
 

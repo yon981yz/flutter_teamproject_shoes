@@ -314,7 +314,7 @@ class _MgtHomeState extends State<MgtHome> {
                                 DataCell(Text(purchase.accountPhone)),
                                 DataCell(Text(purchase.salesprice.toString())),
                                 DataCell(Text(purchase.purchasedate.toString())),
-                                DataCell(Text(purchase.collectiondate.toString())),
+                                DataCell(Text(purchase.collectiondate.toString() == 'null' ? '': purchase.collectiondate.toString())),
                                 DataCell(Text(purchase.collectionstatus)),
                               ]);
                             }).toList();
