@@ -31,4 +31,4 @@ class Purchase {
   purchasedate = res['purchasedate'],
   collectiondate = res['collectiondate'],
   collectionstatus = res['collectionstatus'];
-}
+}// done
