@@ -49,32 +49,67 @@ class _UserProcuctCheckState extends State<UserProcuctCheck> {
                 if(snapshot.hasData){
                   return Column(
                     children: [
-                      Text('주문번호: ${snapshot.data![0]}'),
-                      Text('제품명: ${value[0]}'),
-                      Text('Size: ${value[1]}'),
-                      Text('매장: ${snapshot.data![1]}'),
+                      Text('주문번호: ${snapshot.data![snapshot.data!.length-1].id}',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17
+                      ),
+                      ),
+                      Text('제품명: ${value[0]}',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17
+                      ),                      
+                      ),
+                      Text('Size: ${value[1]}',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17
+                      ),                      
+                      ),
+                      Text('매장: ${snapshot.data![snapshot.data!.length-1].branch}',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17
+                      ),                      
+                      ),
                     ],
                   );
-                }else{
-                  return const Center(
+
+                }else if (snapshot.hasError) {
+                            return Center(
+                                child: Text('Error: ${snapshot.error}'));
+                          } 
+                else{
+                  return Center(
                     child: Text('다시 시도해주세요.'),
                   );
                 }
               },
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    backgroundColor: const Color(0xFF8E807C)
                   ),
-                  backgroundColor: const Color(0xFF8E807C)
-                ),                
-                onPressed: () {
-                  Get.to(const UserHome(),
-                  );
-                }, 
-                child: const Text('확인')
-                ),              
+
+                  onPressed: () {
+                    Get.to(UserHome(),
+                    );
+                  }, 
+                  child: Text('확인',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold
+                    ),                
+                  )
+                  ),
+              ),              
           ],
         ),
       ),

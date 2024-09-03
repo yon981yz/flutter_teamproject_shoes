@@ -82,5 +82,4 @@ class DatabaseHandler{
       version: 1
     );
   }
-
 }
