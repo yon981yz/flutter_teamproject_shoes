@@ -240,6 +240,7 @@ Future<List<Shoes>> queryProSpecsSearch(String name) async{
     return result;
   }
 
+  // 구매상품확인
   Future<List<PurchaseComplete>> queryuserpurchase() async{
     final Database db = await databaseHandler.initializeDB();
     final List<Map<String, Object?>> queryResult =
@@ -248,6 +249,7 @@ Future<List<Shoes>> queryProSpecsSearch(String name) async{
         from branch b, purchase p 
         where b.id=p.branch_id
         ''');
+        print(queryResult);
       return queryResult.map((e) => PurchaseComplete.fromMap(e)).toList();
   }
 

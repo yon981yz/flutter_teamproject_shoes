@@ -20,12 +20,14 @@ class _UserCompliteProductState extends State<UserCompliteProduct> {
     handler=CustomerHandler();
   }
   
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Column(children: [
+        title: const Column(
+          children: [
           Text(
             'SB Market',
             style: TextStyle(
@@ -37,27 +39,26 @@ class _UserCompliteProductState extends State<UserCompliteProduct> {
           ),
         ]),
         toolbarHeight: 100,
-        backgroundColor: Color(0xFFCFD2A5),
+        backgroundColor: const Color(0xFFCFD2A5),
       ),
       body: Center(
         child: Column(
           children: [
-            Text('구매가 확정되었습니다.'),
             FutureBuilder(
               future: handler.queryuserpurchase(), 
               builder: (context, snapshot) {
                 if(snapshot.hasData){
                   return Column(
                     children: [
-                      Text('구매가 확정되었습니다.'),
-                      Text('주문번호'),
+                      // const Text('구매가 확정되었습니다.'),
+                      const Text('주문번호'),
                       Text(snapshot.data![0].toString()),
                       Text(snapshot.data![1].toString()),
-                      Text('매장 키오스크를\n이용하여 제품을 수령하세요.'),
+                      const Text('매장 키오스크를\n이용하여 제품을 수령하세요.'),
                     ],
                   );
                 }else{
-                  return Center(
+                  return const Center(
                     child: Text('다시 시도해주세요.'),
                   );
                 }
@@ -71,7 +72,8 @@ class _UserCompliteProductState extends State<UserCompliteProduct> {
                   backgroundColor: const Color(0xFF8E807C)
                 ),                
                 onPressed: () {
-                  Get.to(UserProcuctCheck(),
+                  Get.to(
+                    ()=> const UserProcuctCheck(),
                   arguments: [
                     value[0],
                     value[1],
@@ -84,7 +86,7 @@ class _UserCompliteProductState extends State<UserCompliteProduct> {
                   ]
                   );
                 }, 
-                child: Text('상세 정보')
+                child: const Text('상세 정보')
                 ),
           ],
         ),
