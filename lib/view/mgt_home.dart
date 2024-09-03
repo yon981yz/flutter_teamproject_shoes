@@ -3,6 +3,7 @@ import 'package:flutter_teamproject_shoes/view/mgt_order_search.dart';
 import 'package:flutter_teamproject_shoes/view/mgt_product_mgt.dart';
 import 'package:flutter_teamproject_shoes/view/mgt_statistic.dart';
 import 'package:flutter_teamproject_shoes/view/mgt_transfer_mgt.dart';
+import 'package:flutter_teamproject_shoes/view/test.dart';
 import 'package:flutter_teamproject_shoes/vm/mgt_handler.dart';
 import 'package:get/route_manager.dart';
 
@@ -48,7 +49,7 @@ class _MgtHomeState extends State<MgtHome> {
 ////// 이번달 매출현황
                       Container(
                         height: 270,
-                        width: 620,
+                        width: 590,
                         margin: const EdgeInsets.all(10.0),
                         decoration: BoxDecoration(
                             border: Border.all(
@@ -74,8 +75,8 @@ class _MgtHomeState extends State<MgtHome> {
                                 child: FutureBuilder(
                                   future: mgtHandler.querySalesToday(),
                                   builder: (context, snapshot) {
-                                    if (snapshot.hasData) {
-                                      return DataTable(columns: const [
+                                  if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                            return DataTable(columns: const [
                                         DataColumn(label: Text('총 구매')),
                                         DataColumn(label: Text('총 매출')),
                                       ], rows: [
@@ -116,7 +117,7 @@ class _MgtHomeState extends State<MgtHome> {
 
                       Container(
                         height: 270,
-                        width: 620,
+                        width: 590,
                         margin: const EdgeInsets.all(10.0),
                         decoration: BoxDecoration(
                             border: Border.all(
@@ -142,14 +143,15 @@ class _MgtHomeState extends State<MgtHome> {
                                 child: FutureBuilder(
                                   future: mgtHandler.querySalesToday(),
                                   builder: (context, snapshot) {
-                                    if (snapshot.hasData) {
+                                        if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                                       return DataTable(columns: const [
                                         DataColumn(label: Text('총 구매')),
                                         DataColumn(label: Text('총 매출')),
                                       ], rows: [
                                         DataRow(cells: [
-                                          DataCell(Text(snapshot.data![0].count
-                                              .toString())),
+                                          DataCell(Text(
+                                            snapshot.data![0].count.toString(),
+                                          )),
                                           DataCell(Text(snapshot.data![0].total
                                               .toString())),
                                         ])
@@ -185,7 +187,7 @@ class _MgtHomeState extends State<MgtHome> {
 
                   Container(
                     height: 560,
-                    width: 620,
+                    width: 590,
                     margin: const EdgeInsets.all(10.0),
                     decoration: BoxDecoration(
                         border: Border.all(
@@ -344,7 +346,7 @@ class _MgtHomeState extends State<MgtHome> {
 
               Container(
                 height: 300,
-                width: 1265,
+                width: 1200,
                 margin: const EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
                     border:
@@ -434,6 +436,8 @@ class _MgtHomeState extends State<MgtHome> {
           ),
         ),
       ),
+
+      
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -492,6 +496,14 @@ class _MgtHomeState extends State<MgtHome> {
           ],
         ),
       ),
+
+      //     floatingActionButton: 
+      // FloatingActionButton(
+      //   onPressed: () {
+      //     Get.to(Test());
+      //   },
+      //   ),
+        
     );
   }
 }

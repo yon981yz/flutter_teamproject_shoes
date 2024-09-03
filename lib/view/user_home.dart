@@ -1,13 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_teamproject_shoes/model/shoes.dart';
-import 'package:flutter_teamproject_shoes/view/user_my_info.dart';
-import 'package:flutter_teamproject_shoes/view/user_procuct_check.dart';
 import 'package:flutter_teamproject_shoes/view/user_product_details.dart';
-import 'package:flutter_teamproject_shoes/vm/SY.dart';
 import 'package:flutter_teamproject_shoes/vm/customer_handler.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class UserHome extends StatefulWidget {
   const UserHome({super.key});
@@ -17,29 +13,18 @@ class UserHome extends StatefulWidget {
 }
 
 class _UserHomeState extends State<UserHome> {
-  // Property
-  
-  CustomerHandler handler = CustomerHandler();
-  SHandler shhandler = SHandler();
-
-  late String userId;
-  final box = GetStorage();
-  late List<int> shoseSizes;
-
   late TextEditingController searchController;
   late List<int> sizes;
   late int sizeValue;
   late int kindChoice;
- 
+  late CustomerHandler handler;
   late List<Shoes> shoesList;
   late String ? brand;
-  late Future<List<Shoes>> searchFutureNike;  
-  late Future<List<Shoes>> searchFutureNew;  
-  late Future<List<Shoes>> searchFuturePro;
-  late Future<List<Shoes>> searchFutureAll;
+    late Future<List<Shoes>> searchFutureNike;  
+    late Future<List<Shoes>> searchFutureNew;  
+    late Future<List<Shoes>> searchFuturePro;
+    late Future<List<Shoes>> searchFutureAll;
   // Shoes? selectedShoe;
-  
-
 
   //Segment Widget
   Map<int, Image> segmentWidgets = {
@@ -48,7 +33,6 @@ class _UserHomeState extends State<UserHome> {
     2: Image.asset('images/newbalance.png', width: 80,),
     3: Image.asset('images/prospecs.png', width: 90,)
   };
-
 
   @override
   void initState() {
@@ -65,15 +49,7 @@ class _UserHomeState extends State<UserHome> {
     searchFutureAll=Future.value([]);
     brand='';
     // handler.queryShoesSize();
-
-    userId = "";
-    iniStorage();
   }
-
-  iniStorage() {
-    userId = box.read('p_userID');
-  }
-
 
   Future loadShoes() async{
     shoesList=await handler.queryShoesHome();
@@ -83,81 +59,8 @@ class _UserHomeState extends State<UserHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          drawer: Drawer(
-          child: ListView(
-            children: [
-              Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            userId,
-                            style: const TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const Text(
-                            '님',
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Row(
-                        children: [
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Text(
-                            'SB Mart에 오신 것을 \n     환영 합니다!',
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 50,
-                      ),
-                      const Divider(
-                        color: Colors.black,
-                      ),
-                      ListTile(
-                        onTap: () {
-                          Get.back();
-                          Get.to(
-                            () => const UserMyInfo(),
-                          );
-                        },
-                        title: const Text('내정보'),
-                      ),
-                      const Divider(
-                        color: Colors.black,
-                      ),
-                      ListTile(
-                        onTap: () {
-                          Get.back();
-                          //
-                        },
-                        title: const Text('구매내역'),
-                      ),
-                      const Divider(
-                        color: Colors.black,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
       appBar: AppBar(
-        title: const Column(
-          children: [
+        title: const Column(children: [
           Text(
             'SB Market',
             style: TextStyle(
@@ -167,23 +70,9 @@ class _UserHomeState extends State<UserHome> {
                 fontWeight: FontWeight.bold,
                 fontStyle: FontStyle.italic),
           ),
-        ],
-      ),
-      actions: [
-            Row(
-              children: [
-                const Text('로그아웃'),
-                IconButton(
-                  onPressed: () {
-                    Get.back();
-                  },
-                  icon: const Icon(Icons.logout),
-                ),
-              ],
-            ),
-      ],
+        ]),
         backgroundColor: const Color(0xFFCFD2A5),
-      ),
+      ),                                                                                                     
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -272,7 +161,7 @@ class _UserHomeState extends State<UserHome> {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                      Get.to(()=> UserProductDetailsPage(purchaseId: snapshot.data![index].size),
+                                      Get.to(()=>const UserProductDetails(),
                                       arguments: [
                                         snapshot.data![index].name,
                                         snapshot.data![index].size,
@@ -316,7 +205,7 @@ class _UserHomeState extends State<UserHome> {
                                           });
                                         }
                                         handler.querySelectshoe(snapshot.data![index].image, sizeValue);
-                                        Get.to(()=> UserProductDetailsPage(purchaseId: snapshot.data![index].size),
+                                        Get.to(()=>const UserProductDetails(),
                                         arguments: [
                                           snapshot.data![index].name,
                                           value,
@@ -324,7 +213,8 @@ class _UserHomeState extends State<UserHome> {
                                           snapshot.data![index].salesprice,
                                           snapshot.data![index].image,
                                           snapshot.data![index].logo,
-                                          snapshot.data![index].brand
+                                          snapshot.data![index].brand,
+                                          snapshot.data![index].id,
                                         ]
                                         );                                  
                                         setState(() {});
@@ -373,7 +263,7 @@ class _UserHomeState extends State<UserHome> {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                      Get.to(()=> UserProductCheckPage(purchaseId: snapshot.data![index].size),
+                                      Get.to(()=>const UserProductDetails(),
                                       arguments: [
                                         snapshot.data![index].name,
                                         snapshot.data![index].size,
@@ -385,8 +275,7 @@ class _UserHomeState extends State<UserHome> {
                                       ]
                                       );
                                     },
-                                    child: Image.memory(snapshot.data![index].image, width: 130,)
-                                    ),
+                                    child: Image.memory(snapshot.data![index].image, width: 130,)),
                                   Row(
                                     children: [
                                       Image.memory(snapshot.data![index].logo, width: 40,),
@@ -417,7 +306,7 @@ class _UserHomeState extends State<UserHome> {
                                           });
                                         }
                                         handler.querySelectshoe(snapshot.data![index].image, shot.data![index]);
-                                        Get.to(()=>UserProductDetailsPage(purchaseId: shot.data![index]),
+                                        Get.to(()=>const UserProductDetails(),
                                         arguments: [
                                           snapshot.data![index].name,
                                           value,
@@ -425,7 +314,8 @@ class _UserHomeState extends State<UserHome> {
                                           snapshot.data![index].salesprice,
                                           snapshot.data![index].image,
                                           snapshot.data![index].logo,
-                                          snapshot.data![index].brand
+                                          snapshot.data![index].brand,
+                                          snapshot.data![index].id,
                                         ]
                                         );                                  
                                         setState(() {});
@@ -474,7 +364,7 @@ class _UserHomeState extends State<UserHome> {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                      Get.to(()=> UserProductDetailsPage(purchaseId: shot.data![index]),
+                                      Get.to(()=>const UserProductDetails(),
                                       arguments: [
                                         snapshot.data![index].name,
                                         snapshot.data![index].size,
@@ -516,7 +406,7 @@ class _UserHomeState extends State<UserHome> {
                                           });
                                         }
                                         handler.querySelectshoe(snapshot.data![index].image, sizeValue);
-                                        Get.to(()=> UserProductDetailsPage(purchaseId: shot.data![index]),
+                                        Get.to(()=>const UserProductDetails(),
                                         arguments: [
                                           snapshot.data![index].name,
                                           value,
@@ -525,6 +415,7 @@ class _UserHomeState extends State<UserHome> {
                                           snapshot.data![index].image,
                                           snapshot.data![index].logo,
                                           snapshot.data![index].brand,
+                                          snapshot.data![index].id,
                                         ]
                                         );                                  
                                         setState(() {});
@@ -574,7 +465,7 @@ class _UserHomeState extends State<UserHome> {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                      Get.to(()=>UserProductDetailsPage(purchaseId: shot.data![index]),
+                                      Get.to(()=>const UserProductDetails(),
                                       arguments: [
                                         snapshot.data![index].name,
                                         snapshot.data![index].size,
@@ -597,40 +488,44 @@ class _UserHomeState extends State<UserHome> {
                                     ],
                                   ),
                                   Expanded(
-                                    child: DropdownButton(
-                                      dropdownColor: Colors.white,
-                                      borderRadius: BorderRadius.circular(20),
-                                      isExpanded: true,
-                                      value: sizeValue,
-                                      icon: const Icon(Icons.keyboard_arrow_down),
-                                      items: shot.data?.map((int size){
-                                        return DropdownMenuItem<int>(
-                                          value: size,
-                                          child: Text(size.toString())
-                                          );
-                                      }
-                                      ).toList(), 
-                                      onChanged: (value) {
-                                        if(value!=null){
-                                          setState(() {
-                                            sizeValue=value;
-                                          });
+                                    child: SizedBox(
+                                      width: 100,
+                                      child: DropdownButton(
+                                        dropdownColor: Colors.white,
+                                        borderRadius: BorderRadius.circular(20),
+                                        isExpanded: true,
+                                        value: sizeValue,
+                                        icon: const Icon(Icons.keyboard_arrow_down),
+                                        items: shot.data?.map((int size){
+                                          return DropdownMenuItem<int>(
+                                            value: size,
+                                            child: Text(size.toString())
+                                            );
                                         }
-                                        handler.querySelectshoe(snapshot.data![index].image, sizeValue);
-                                        Get.to(()=>UserProductDetailsPage(purchaseId: shot.data![index]),
-                                        arguments: [
-                                          snapshot.data![index].name,
-                                          value,
-                                          snapshot.data![index].color,
-                                          snapshot.data![index].salesprice,
-                                          snapshot.data![index].image,
-                                          snapshot.data![index].logo,
-                                          snapshot.data![index].brand,
-                                        ]
-                                        );                                  
-                                        setState(() {});
-                                      },
-                                      ),
+                                        ).toList(), 
+                                        onChanged: (value) {
+                                          if(value!=null){
+                                            setState(() {
+                                            sizeValue=value;
+                                            });
+                                          }
+                                          handler.querySelectshoe(snapshot.data![index].image, sizeValue);
+                                          Get.to(()=>const UserProductDetails(),
+                                          arguments: [
+                                            snapshot.data![index].name,
+                                            value,
+                                            snapshot.data![index].color,
+                                            snapshot.data![index].salesprice,
+                                            snapshot.data![index].image,
+                                            snapshot.data![index].logo,
+                                            snapshot.data![index].brand,
+                                            snapshot.data![index].id,
+                                          ]
+                                          );                                  
+                                          setState(() {});
+                                        },
+                                        ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -677,7 +572,7 @@ class _UserHomeState extends State<UserHome> {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                      Get.to(()=>UserProductDetailsPage(purchaseId: shot.data![index]),
+                                      Get.to(()=>const UserProductDetails(),
                                       arguments: [
                                         snapshot.data![index].name,
                                         snapshot.data![index].size,
@@ -721,7 +616,7 @@ class _UserHomeState extends State<UserHome> {
                                           value.toInt();
                                         }
                                         handler.querySelectshoe(snapshot.data![index].image, sizeValue);
-                                        Get.to(()=>UserProductDetailsPage(purchaseId: shot.data![index]),
+                                        Get.to(()=>const UserProductDetails(),
                                         arguments: [
                                           snapshot.data![index].name,
                                           value,
@@ -730,6 +625,7 @@ class _UserHomeState extends State<UserHome> {
                                           snapshot.data![index].image,
                                           snapshot.data![index].logo,
                                           snapshot.data![index].brand,
+                                          snapshot.data![index].id,
                                         ]
                                         );                                  
                                         setState(() {});
@@ -776,7 +672,7 @@ class _UserHomeState extends State<UserHome> {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                      Get.to(()=>UserProductDetailsPage(purchaseId: shot.data![index]),
+                                      Get.to(()=>const UserProductDetails(),
                                       arguments: [
                                         snapshot.data![index].name,
                                         snapshot.data![index].size,
@@ -819,7 +715,7 @@ class _UserHomeState extends State<UserHome> {
                                           });
                                         }
                                         handler.querySelectshoe(snapshot.data![index].image, sizeValue);
-                                        Get.to(()=>UserProductDetailsPage(purchaseId: shot.data![index]),
+                                        Get.to(()=>const UserProductDetails(),
                                         arguments: [
                                           snapshot.data![index].name,
                                           value,
@@ -828,6 +724,7 @@ class _UserHomeState extends State<UserHome> {
                                           snapshot.data![index].image,
                                           snapshot.data![index].logo,
                                           snapshot.data![index].brand,
+                                          snapshot.data![index].id,
                                         ]
                                         );                                  
                                         setState(() {});
@@ -852,6 +749,7 @@ class _UserHomeState extends State<UserHome> {
             ],
           ),
         ),
+        drawer: const Drawer(),
         resizeToAvoidBottomInset : false,
         backgroundColor: Colors.white,
     );

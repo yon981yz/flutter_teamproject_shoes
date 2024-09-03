@@ -22,6 +22,6 @@ class Topfiveshoes {
     shoesid = res['shoesid'],
     shoesname = res['shoesname'],
     shoesbrand = res['shoesbrand'],
-    totalOrder = res['totalOrder'],
+    totalOrder = res['totalorder'],
     totalsales = res['totalsales'];
 }

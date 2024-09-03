@@ -65,7 +65,7 @@ class DatabaseHandler{
           )
         """);
 
-        // Account
+        // transfer
 
         await db.execute("""
           CREATE TABLE transfer (

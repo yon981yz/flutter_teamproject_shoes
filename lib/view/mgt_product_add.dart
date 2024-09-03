@@ -15,7 +15,7 @@ class MgtProductAdd extends StatefulWidget {
 }
 
 class _MgtProductAddState extends State<MgtProductAdd> {
-  late MgtHandler mgt_Handler;
+  late MgtHandler mgtHandler;
   late TextEditingController nameController;
   late TextEditingController sizeController;
   late TextEditingController salespriceController;
@@ -31,7 +31,7 @@ class _MgtProductAddState extends State<MgtProductAdd> {
   void initState() {
     super.initState();
 
-    mgt_Handler = MgtHandler();
+    mgtHandler = MgtHandler();
     nameController = TextEditingController();
     sizeController = TextEditingController();
     salespriceController = TextEditingController();
@@ -210,7 +210,7 @@ class _MgtProductAddState extends State<MgtProductAdd> {
         brand: brandController.text.trim(),
         image: getImage,
         logo: getlogo );
-    int result = await mgt_Handler.insertShoes(shoesInsert);
+    int result = await mgtHandler.insertShoes(shoesInsert);
     if(result != 0) {
       _showDialog();
     }

@@ -12,9 +12,9 @@ class Topaccount {
   });
 
   Topaccount.fromMap(Map<String, dynamic> res)
-  : accountId = res['accountId'],
-    accountName = res['accountName'],
-    purchaseCount = res['purchaseCount'],
-    totalSales = res['totalSales'];
+  : accountId = res['accountid'],
+    accountName = res['accountname'],
+    purchaseCount = res['purchasecount'],
+    totalSales = res['totalsales'];
 
 }
