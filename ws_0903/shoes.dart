@@ -30,4 +30,4 @@ class Shoes{
   salesprice=inf['salesprice'],
   color=inf['color'],
   brand=inf['brand'];
-}
+}//done

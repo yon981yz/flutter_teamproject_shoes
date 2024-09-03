@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_teamproject_shoes/vm/customer_handler.dart';
-import 'package:flutter_teamproject_shoes/vm/database_handler.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -13,12 +12,12 @@ class UserMyInfo extends StatefulWidget {
 
 class _UserMyInfoState extends State<UserMyInfo> {
 
+
   // Property
   late TextEditingController userIdController;
   late TextEditingController nameController;
   late TextEditingController phoneController;
 
-  DatabaseHandler handler = DatabaseHandler();
   CustomerHandler customerHandler = CustomerHandler();
 
   late String userId;
@@ -199,4 +198,3 @@ class _UserMyInfoState extends State<UserMyInfo> {
     );
   }
 }// END
-

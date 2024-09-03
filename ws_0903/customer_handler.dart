@@ -1,52 +1,16 @@
 import 'dart:typed_data';
 
-import 'package:flutter_teamproject_shoes/database_handler.dart';
-import 'package:flutter_teamproject_shoes/purchase.dart';
-import 'package:flutter_teamproject_shoes/purchase_complete.dart';
-import 'package:flutter_teamproject_shoes/shoes.dart';
+import 'package:flutter_teamproject_shoes/model/purchase.dart';
+import 'package:flutter_teamproject_shoes/model/shoes.dart';
+import 'package:flutter_teamproject_shoes/vm/database_handler.dart';
 import 'package:sqflite/sqflite.dart';
+
+import 'purchase_complete.dart';
 
 final DatabaseHandler databaseHandler = DatabaseHandler();
 
 
 class CustomerHandler{
-///// 계정 추가
-
-  // Future<int> insertAccount(Accout account) async {
-  //   int result = 0;
-  //   final Database db = await databaseHandler.initializeDB();
-  //   result = await db.rawInsert(
-  //     """
-  //     insert into account(id, name, phone, password)
-  //     values (?,?,?,?)
-  //     """, [
-  //       account.id,
-  //       account.name,
-  //       account.phone,
-  //       account.password,
-  //     ]
-  //   );
-  //   return result;
-  // }
-///// 로그인 검색
-
-// Future<List<Accout>> queryLoginCheck(String id, String password) async{
-//     final Database db = await databaseHandler.initializeDB();
-//     final List<Map<String, Object?>> queryResult =
-//       await db.rawQuery('select * from Accont where id = ? and password = ?',
-//       [id,password]);
-//       return queryResult.map((e) => Accout.fromMap(e)).toList();
-//   }
-
-// ///// 내정보 검색
-
-// Future<List<Accout>> queryMyinfo(String id) async{
-//     final Database db = await databaseHandler.initializeDB();
-//     final List<Map<String, Object?>> queryResult =
-//       await db.rawQuery('select * from Accont where id = ?',
-//       [id]);
-//       return queryResult.map((e) => Accout.fromMap(e)).toList();
-//   }
 
 ///// 신발 이미지로 정렬 (고객 구매 페이지 디스플레이) 
 
@@ -194,4 +158,4 @@ Future<List<Shoes>> queryProSpecsSearch(String name) async{
   }
 
 
-}
+}// done

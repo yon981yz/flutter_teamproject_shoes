@@ -1,75 +1,137 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_teamproject_shoes/model/branch.dart';
-import 'package:flutter_teamproject_shoes/view/user_complite_product.dart';
+import 'dart:math';
 
-class UserChoiceBranchPage extends StatefulWidget {
+import 'package:flutter/material.dart';
+import 'package:flutter_teamproject_shoes/model/purchase.dart';
+import 'package:flutter_teamproject_shoes/view/user_complite_product.dart';
+import 'package:flutter_teamproject_shoes/vm/customer_handler.dart';
+import 'package:get/route_manager.dart';
+import 'package:get_storage/get_storage.dart';
+
+
+class UserChoiceBranch extends StatefulWidget {
+  const UserChoiceBranch({super.key});
+
   @override
-  _UserChoiceBranchPageState createState() => _UserChoiceBranchPageState();
+  State<UserChoiceBranch> createState() => _UserChoiceBranchState();
 }
 
-class _UserChoiceBranchPageState extends State<UserChoiceBranchPage> {
-  Branch? _selectedBranch;
+class _UserChoiceBranchState extends State<UserChoiceBranch> {
+  late CustomerHandler handler;
+  late int radioValue;
+  var value=Get.arguments ??'___';
+  late String userId;
+  final box = GetStorage();  
 
-  Future<List<Branch>> _getBranches() async {
-    List<Branch> branches = [
-      Branch(id: 1, name: "SB Market 신사점"),
-      Branch(id: 2, name: "SB Market 잠실점"),
-      Branch(id: 3, name: "SB Market 강남점"),
-    ];
-    return branches;
+  @override
+  void initState() {
+    super.initState();
+    radioValue=0;
+    handler=CustomerHandler();
+
+    userId = "";
+    // iniStorage();    
   }
+
+  // iniStorage() {
+  //   userId = box.read('p_userID');
+  // }  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('매장 위치 선택')), 
-      body: FutureBuilder<List<Branch>>(
-        future: _getBranches(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No branches available'));
-          } else {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                final branch = snapshot.data![index];
-                return RadioListTile<Branch>(
-                  title: Text(branch.name),
-                  value: branch,
-                  groupValue: _selectedBranch,
-                  onChanged: (Branch? value) {
-                    setState(() {
-                      _selectedBranch = value;
-                    });
-                  },
-                );
-              },
-            );
-          }
-        },
+      appBar: AppBar(
+        title: Column(children: [
+          Text(
+            'SB Market',
+            style: TextStyle(
+                color: Color(0xFF776661),
+                fontSize: 27,
+                fontFamily: 'Figma Hand',
+                fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic),
+          ),
+        ]),
+        toolbarHeight: 100,
+        backgroundColor: Color(0xFFCFD2A5),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _selectedBranch != null
-            ? () {
-                 // navigating to usrcompleietproductpage with the selected branch
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => UserCompliteProductPage(
-                      purchaseId: 1,   // example purchaseid it should be dynamic in a real app
-                      selectedBranch: _selectedBranch!,
-                    ),
-                  ),
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Column(
+          children: [
+            Text('매장 위치 선택'),
+            Row(
+              children: [
+                Radio(
+                  value: 0, 
+                  groupValue: radioValue, 
+                  onChanged: (value) {
+                    radioChange(value);
+                  },),
+                  Text('SB Market 강남점')
+              ],
+            ),
+            Row(
+              children: [
+                Radio(
+                  value: 1, 
+                  groupValue: radioValue, 
+                  onChanged: (value) {
+                    radioChange(value);
+                  },),
+                  Text('SB Market 신사점')                  
+              ],
+            ),
+            Row(
+              children: [
+                Radio(
+                  value: 2,
+                  groupValue: radioValue, 
+                  onChanged: (value) {
+                    radioChange(value);
+                  },),
+                  Text('SB Market 잠실점'),                  
+              ],
+            ),
+            ElevatedButton(
+              onPressed: () {
+                insertAction();
+                Get.to(UserCompliteProduct(),
+                arguments: [
+                    value[0],
+                    value[1],
+                    value[2],
+                    value[3],
+                    value[4],
+                    value[5],
+                    value[6],
+                    value[7],
+                ]
                 );
-              }
-            : null,   // here disable the button if no branch is selected
-        child: Icon(Icons.arrow_forward),
-        backgroundColor: _selectedBranch != null ? Colors.blue : Colors.grey,
+              }, 
+              child: Text('구매 확정'))
+          ],
+        ),
       ),
     );
+  }
+    radioChange(int? value) {
+    radioValue = value!;
+    setState(() {});
+  }
+
+    insertAction() async{
+    var purchaseInsert=Purchase(
+    id: Random().nextInt(9999),
+    shoesid: value[7],
+    accountid: 'asfd',
+    branchid: radioValue+1,
+    salesprice: value[3],
+    purchasedate: DateTime.now().toString(),
+    collectionstatus: '미수령',
+    collectiondate: ''
+      );
+      int result = await handler.insertPurchase(purchaseInsert);
+      if(result!=0){
+      }
   }
 }

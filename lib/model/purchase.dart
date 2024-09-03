@@ -1,13 +1,13 @@
 // 구매
 class Purchase {
-  final int? id;  // 주문id
+  final int? id;  // 주문번호
   final int salesprice; // 결제금액
   final String? purchasedate; // 구매일자
   final String? collectiondate; // 수령일자
   final String collectionstatus; // 수령여부
-  final int branchid ;
-  final String accountid ;
-  final int shoesid ;
+  final int shoesid;
+  final String accountid;
+  final int branchid;
 
   Purchase(
     {
@@ -16,20 +16,19 @@ class Purchase {
       this.purchasedate,
       this.collectiondate,
       required this.collectionstatus,
-      required this.branchid,
-      required this.accountid,
       required this.shoesid,
-
+      required this.accountid,
+      required this.branchid
     }
   );
 
   Purchase.fromMap(Map<String, dynamic> res)
   : id = res['id'],
+  shoesid=res['shoesid'],
+  accountid=res['accountid'],
+  branchid=res['branchid'],
   salesprice = res['salesprice'],
   purchasedate = res['purchasedate'],
   collectiondate = res['collectiondate'],
-  collectionstatus = res['collectionstatus'],
-  branchid = res['branchid'],
-  accountid = res['accountid'],
-  shoesid = res['shoesid'];
+  collectionstatus = res['collectionstatus'];
 }
