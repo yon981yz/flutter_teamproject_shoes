@@ -11,6 +11,7 @@ final DatabaseHandler databaseHandler = DatabaseHandler();
 
 
 class CustomerHandler{
+
 ///// 계정 추가
 Future<int> insertAccount(Account account) async {
   int result = 0;
@@ -104,7 +105,6 @@ Future<int> queryPurchaseNumber(String id) async {
   );
     return queryResult.isNotEmpty ? 1 : 0;
   }
-
 
 ///// 신발 이미지로 정렬 (고객 구매 페이지 디스플레이) 
 

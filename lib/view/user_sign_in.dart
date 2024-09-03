@@ -12,7 +12,6 @@ class UserSignIn extends StatefulWidget {
 }
 
 class _UserSignInState extends State<UserSignIn> {
-
   // Property
   DatabaseHandler handler = DatabaseHandler();
   CustomerHandler customerHandler = CustomerHandler();

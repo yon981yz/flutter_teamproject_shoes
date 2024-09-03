@@ -12,7 +12,6 @@ class UserMyInfo extends StatefulWidget {
 
 class _UserMyInfoState extends State<UserMyInfo> {
 
-
   // Property
   late TextEditingController userIdController;
   late TextEditingController nameController;
