@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_teamproject_shoes/view/user_choice_branch%20copy.dart';
-import 'package:flutter_teamproject_shoes/view/user_choice_branch.dart';
 import 'package:flutter_teamproject_shoes/vm/customer_handler.dart';
 import 'package:get/route_manager.dart';
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_teamproject_shoes/view/home.dart';
+import 'package:flutter_teamproject_shoes/view/mgt_product_add.dart';
 import 'package:get/route_manager.dart';
 
 void main() {

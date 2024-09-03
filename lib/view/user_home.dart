@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_teamproject_shoes/model/shoes.dart';
 import 'package:flutter_teamproject_shoes/view/user_my_info.dart';
+import 'package:flutter_teamproject_shoes/view/user_product_details%20copy.dart';
 import 'package:flutter_teamproject_shoes/view/user_product_details.dart';
 import 'package:flutter_teamproject_shoes/view/user_purchase_list.dart';
 import 'package:flutter_teamproject_shoes/vm/customer_handler.dart';
@@ -103,7 +104,7 @@ class _UserHomeState extends State<UserHome> {
                             width: 20,
                           ),
                           Text(
-                            'SB Mart에 오신 것을 \n     환영 합니다!',
+                            'SB Market에 오신 것을 \n     환영 합니다!',
                             style: TextStyle(fontSize: 15),
                           ),
                         ],
@@ -165,7 +166,7 @@ class _UserHomeState extends State<UserHome> {
             children: [
               Container(
                 height: 150,
-                width: 400,
+                width: 500,
                 color: const Color(0xFFCFD2A5),
                 child: Column( children: [
                           Padding(
@@ -224,7 +225,7 @@ class _UserHomeState extends State<UserHome> {
               kindChoice==1&&searchController.text.trim().isEmpty
               ?
               SizedBox(
-                height: 500,
+                height: 600,
                 child: FutureBuilder(
                   future: handler.queryNike(),
                   builder: (context, snapshot) {
@@ -253,7 +254,8 @@ class _UserHomeState extends State<UserHome> {
                                       Text(snapshot.data![index].name,
                                       overflow: TextOverflow.ellipsis,
                                       ),
-                                      Text('  ${snapshot.data![index].salesprice.toString()} 원')
+                                      Text('  ${snapshot.data![index].salesprice.toString()} 원',
+                                      overflow: TextOverflow.ellipsis,)
                                     ],
                                   ),
                                   Expanded(
@@ -311,7 +313,7 @@ class _UserHomeState extends State<UserHome> {
               : kindChoice==2&&searchController.text.trim().isEmpty
               ?
               SizedBox(
-                height: 500,
+                height: 600,
                 child: FutureBuilder(
                   future: handler.queryNewBalance(), 
                   builder: (context, snapshot) {
@@ -340,7 +342,8 @@ class _UserHomeState extends State<UserHome> {
                                       Text(snapshot.data![index].name,
                                       overflow: TextOverflow.ellipsis,
                                       ),
-                                      Text('  ${snapshot.data![index].salesprice.toString()} 원')
+                                      Text('  ${snapshot.data![index].salesprice.toString()} 원',
+                                      overflow: TextOverflow.ellipsis,)
                                     ],
                                   ),
                                   Expanded(
@@ -397,7 +400,7 @@ class _UserHomeState extends State<UserHome> {
               : kindChoice==3&&searchController.text.trim().isEmpty
               ?
               SizedBox(
-                height: 500,
+                height: 600,
                 child: FutureBuilder(
                   future: handler.queryProSpecs(), 
                   builder: (context, snapshot) {
@@ -426,7 +429,8 @@ class _UserHomeState extends State<UserHome> {
                                       Text(snapshot.data![index].name,
                                       overflow: TextOverflow.ellipsis,
                                       ),
-                                      Text('  ${snapshot.data![index].salesprice.toString()} 원')
+                                      Text('  ${snapshot.data![index].salesprice.toString()} 원',
+                                      overflow: TextOverflow.ellipsis,)
                                     ],
                                   ),
                                   Expanded(
@@ -482,7 +486,7 @@ class _UserHomeState extends State<UserHome> {
               : kindChoice==0&&searchController.text.trim().isEmpty
               ? 
               SizedBox(
-                height: 500,
+                height: 600,
                 child: FutureBuilder(
                   future: handler.queryShoesHome(), 
                   builder: (context, snapshot) {
@@ -512,7 +516,8 @@ class _UserHomeState extends State<UserHome> {
                                       Text(snapshot.data![index].name,
                                       overflow: TextOverflow.ellipsis,
                                       ),
-                                      Text('  ${snapshot.data![index].salesprice.toString()} 원')
+                                      Text('  ${snapshot.data![index].salesprice.toString()} 원',
+                                      overflow: TextOverflow.ellipsis,)
                                     ],
                                   ),
                                   Expanded(
@@ -575,7 +580,7 @@ class _UserHomeState extends State<UserHome> {
               : kindChoice==0&&searchController.text.trim().isNotEmpty
               ?
               SizedBox(
-                height: 500,
+                height: 600,
                 child: FutureBuilder(
                   future: handler.queryShoesHomeSearch(searchController.text.trim()), 
                   builder: (context, snapshot) {
@@ -604,7 +609,8 @@ class _UserHomeState extends State<UserHome> {
                                       Text(snapshot.data![index].name,
                                       overflow: TextOverflow.ellipsis,
                                       ),
-                                      Text('  ${snapshot.data![index].salesprice.toString()} 원')
+                                      Text('  ${snapshot.data![index].salesprice.toString()} 원',
+                                      overflow: TextOverflow.ellipsis,)
                                     ],
                                   ),
                                   Expanded(
@@ -660,7 +666,7 @@ class _UserHomeState extends State<UserHome> {
                   ),
               )            
               : SizedBox(
-                height: 500,
+                height: 600,
                 child: FutureBuilder(
                   future: handler.queryBrandSearch(brand!,searchController.text.trim()), 
                   builder: (context, snapshot) {
@@ -689,7 +695,9 @@ class _UserHomeState extends State<UserHome> {
                                       Text(snapshot.data![index].name,
                                       overflow: TextOverflow.ellipsis,
                                       ),
-                                      Text('  ${snapshot.data![index].salesprice.toString()} 원')
+                                      Text('  ${snapshot.data![index].salesprice.toString()} 원',
+                                      overflow: TextOverflow.ellipsis,
+                                      )
                                     ],
                                   ),
                                   Expanded(
@@ -730,7 +738,7 @@ class _UserHomeState extends State<UserHome> {
                                   ),
                                 ],
                               ),
-                                                          );
+                              );
                             },
                           );
                         },

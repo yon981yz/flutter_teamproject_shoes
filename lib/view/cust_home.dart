@@ -252,7 +252,10 @@ class _CustHomeState extends State<CustHome> {
     int result = await customerHandler.queryPurchaseNumber(number);
 
     if (result == 1) {
-      Get.to(() => const CustProductCheck());
+      Get.to(
+        () => const CustProductCheck(),
+        arguments: number,
+        );
     } else {
       _showDialog();
     }

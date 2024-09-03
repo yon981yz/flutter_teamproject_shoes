@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_teamproject_shoes/model/purchase.dart';
 import 'package:flutter_teamproject_shoes/view/user_complite_product%20copy.dart';
-import 'package:flutter_teamproject_shoes/view/user_complite_product.dart';
 import 'package:flutter_teamproject_shoes/vm/customer_handler.dart';
 import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
@@ -33,12 +32,12 @@ class _UserChoiceBranchState extends State<UserChoiceBranch> {
     handler=CustomerHandler();
 
     userId = "";
-    // iniStorage();    
+    iniStorage();    
   }
 
-  // iniStorage() {
-  //   userId = box.read('p_userID');
-  // }  
+  iniStorage() {
+    userId = box.read('p_userID');
+  }  
 
   @override
   Widget build(BuildContext context) {
@@ -172,7 +171,7 @@ class _UserChoiceBranchState extends State<UserChoiceBranch> {
     var purchaseInsert=Purchase(
     id: int.parse(orderNumber),
     shoesid: value[7],
-    accountid: '123',
+    accountid: userId,
     branchid: radioValue+1,
     salesprice: value[3],
     purchasedate: formatDate(DateTime.now()),
