@@ -1,5 +1,6 @@
 import 'package:flutter_teamproject_shoes/model/PurchaseSummary.dart';
 import 'package:flutter_teamproject_shoes/model/Topbrand.dart';
+import 'package:flutter_teamproject_shoes/model/purchase.dart';
 import 'package:flutter_teamproject_shoes/model/purchaseDetail.dart';
 import 'package:flutter_teamproject_shoes/model/shoes.dart';
 import 'package:flutter_teamproject_shoes/model/topAccount.dart';
@@ -38,17 +39,17 @@ Future<List<PurchaseDetail>> queryPurchaseDetails() async {
   final Database db = await databaseHandler.initializeDB();
   final List<Map<String, Object?>> queryResult = await db.rawQuery('''
     SELECT
-      p.id AS id,
-      a.name AS accountname,
-      a.phone AS accountphone,
-      s.name AS shoesname,
-      s.size AS shoessize,
-      s.color AS shoescolor,
-      s.brand AS shoesbrand,
-      p.salesprice,
-      p.purchasedate,
-      p.collectiondate,
-      p.collectionstatus
+      p.id as id,
+      a.name as accountname,
+      a.phone as accountphone,
+      s.name as shoesname,
+      s.size as shoessize,
+      s.color as shoescolor,
+      s.brand as shoesbrand,
+      p.salesprice as salesprice,
+      p.purchasedate as purchasedate,
+      p.collectiondate as collectiondate,
+      p.collectionstatus as collectionstatus
     FROM purchase p, shoes s, account a 
     WHERE p.account_id = a.id and
       p.shoes_id = s.id and
@@ -64,17 +65,17 @@ Future<List<PurchaseDetail>> queryPurchaseDetailsSearch(String name) async {
   final Database db = await databaseHandler.initializeDB();
   final List<Map<String, Object?>> queryResult = await db.rawQuery('''
     SELECT
-      p.id AS id,
-      a.name AS accountname,
-      a.phone AS accountphone,
-      s.name AS shoesname,
-      s.size AS shoessize,
-      s.color AS shoescolor,
-      s.brand AS shoesbrand,
-      p.salesprice,
-      p.purchasedate,
-      p.collectiondate,
-      p.collectionstatus
+      p.id as id,
+      a.name as accountname,
+      a.phone as accountphone,
+      s.name as shoesname,
+      s.size as shoessize,
+      s.color as shoescolor,
+      s.brand as shoesbrand,
+      p.salesprice as salesprice,
+      p.purchasedate as purchasedate,
+      p.collectiondate as collectiondate,
+      p.collectionstatus as collectionstatus
     FROM purchase p, shoes s, account a 
     WHERE p.account_id = a.id and
       p.shoes_id = s.id
@@ -90,17 +91,17 @@ Future<List<PurchaseDetail>> queryPurchaseDetails2Limit() async {
     final Database db = await databaseHandler.initializeDB();
     final List<Map<String, Object?>> queryResult = await db.rawQuery('''
     SELECT
-      p.id AS id,
-      a.name AS accountname,
-      a.phone AS accountphone,
-      s.name AS shoesname,
-      s.size AS shoessize,
-      s.color AS shoescolor,
-      s.brand AS shoesbrand,
-      p.salesprice,
-      p.purchasedate,
-      p.collectiondate,
-      p.collectionstatus
+      p.id as id,
+      a.name as accountname,
+      a.phone as accountphone,
+      s.name as shoesname,
+      s.size as shoessize,
+      s.color as shoescolor,
+      s.brand as shoesbrand,
+      p.salesprice as salesprice,
+      p.purchasedate as purchasedate,
+      p.collectiondate as collectiondate,
+      p.collectionstatus as collectionstatus
     FROM purchase p, shoes s, account a 
     WHERE p.account_id = a.id and
       p.shoes_id = s.id
@@ -143,10 +144,11 @@ Future<List<PurchaseSummary>> querySalesToday() async{
     final Database db = await databaseHandler.initializeDB();
     final List<Map<String, Object?>> queryResult =
       await db.rawQuery('''
-      SELECT count(id), sum(salesprice) 
+      SELECT count(id) as count , sum(salesprice) as total
       FROM purchase
       WHERE purchasedate = DATE('now', 'localtime')
       ''');
+      print(queryResult);
       return queryResult.map((e) => PurchaseSummary.fromMap(e)).toList();
   }
 
@@ -160,7 +162,7 @@ Future<List<PurchaseSummary>> querySalesMonth() async{
       await db.rawQuery('''
       SELECT count(id), sum(salesprice) 
       FROM purchase 
-      WHERE strftime('%Y-%m-%d', purchasedate) = strftime('%Y-%m-%d', 'now', 'localtime')
+      WHERE strftime('%Y-%m', purchasedate) = strftime('%Y-%m', 'now', 'localtime')
       ''');
       return queryResult.map((e) => PurchaseSummary.fromMap(e)).toList();
   }
@@ -175,7 +177,7 @@ Future<List<Topfiveshoes>> queryTopFiveShoes() async{
       s.image, s.id, s.name, s.brand, COUNT(p.id) as totalorder, SUM(p.salesprice) as totalsales
     FROM shoes s, purchase p
     WHERE s.id = p.shoes_id and
-      strftime('%Y-%m-%d', p.purchasedate) = strftime('%Y-%m-%d', 'now', 'localtime')
+      strftime('%Y-%m', purchasedate) = strftime('%Y-%m', 'now', 'localtime')
     GROUP BY s.id
     ORDER BY totalsales DESC
     LIMIT 5
@@ -193,7 +195,7 @@ Future<List<Topbrand>> querySalesBrand() async{
     SELECT s.brand, SUM(p.salesprice) AS totalsales
     FROM shoes s, purchase p
     WHERE s.id = p.shoes_id and
-      strftime('%Y-%m-%d', p.purchasedate) = strftime('%Y-%m-%d', 'now', 'localtime')
+      strftime('%Y-%m', purchasedate) = strftime('%Y-%m', 'now', 'localtime')
     GROUP BY s.brand
     ORDER BY totalsales DESC
       ''');
@@ -208,7 +210,7 @@ Future<List<Topaccount>> queryTopFiveAccount() async{
       SELECT a.id AS accountid, a.name AS accountname, COUNT(p.id) AS purchasecount, SUM(p.salesprice) AS totalsales
       FROM account a, purchase p
       WHERE a.id = p.account_id and
-        strftime('%Y-%m-%d', p.purchasedate) = strftime('%Y-%m-%d', 'now', 'localtime')
+        strftime('%Y-%m', purchasedate) = strftime('%Y-%m', 'now', 'localtime')
       GROUP BY a.id
       ORDER BY totalsales DESC
       LIMIT 5
@@ -245,6 +247,31 @@ Future<List<Transfersummary>> queryTransfer() async {
     ''');
   return queryResult.map((e) => Transfersummary.fromMap(e)).toList();
 }
+
+// 구매
+
+  Future<int> purchaseShoes(Purchase purchase) async {
+    int result = 0;
+    final Database db = await databaseHandler.initializeDB();
+    result = await db.rawInsert(
+      """
+      INSERT into purchase(id, salesprice, purchasedate, collectiondate, collectionstatus, branch_id, account_id, shoes_id )
+      values (?,?,?,?,?,?,?,?)
+      """, [
+        purchase.id,
+        purchase.salesprice,
+        purchase.purchasedate,
+        purchase.collectiondate,
+        purchase.collectionstatus,
+        purchase.branchid,
+        purchase.accountid,
+        purchase.shoesid,
+      ]
+    );
+    return result;
+
+  }
+
 
 }
 

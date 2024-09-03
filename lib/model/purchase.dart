@@ -5,6 +5,9 @@ class Purchase {
   final String? purchasedate; // 구매일자
   final String? collectiondate; // 수령일자
   final String collectionstatus; // 수령여부
+  final int branchid ;
+  final String accountid ;
+  final int shoesid ;
 
   Purchase(
     {
@@ -13,6 +16,9 @@ class Purchase {
       this.purchasedate,
       this.collectiondate,
       required this.collectionstatus,
+      required this.branchid,
+      required this.accountid,
+      required this.shoesid,
 
     }
   );
@@ -22,5 +28,8 @@ class Purchase {
   salesprice = res['salesprice'],
   purchasedate = res['purchasedate'],
   collectiondate = res['collectiondate'],
-  collectionstatus = res['collectionstatus'];
+  collectionstatus = res['collectionstatus'],
+  branchid = res['branchid'],
+  accountid = res['accountid'],
+  shoesid = res['shoesid'];
 }
