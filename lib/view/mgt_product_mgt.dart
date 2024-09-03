@@ -18,7 +18,6 @@ class _MgtProductMgtState extends State<MgtProductMgt> {
     late KioskHandler kioskHandler;
     late MgtHandler mgtHandler;
     late TextEditingController searchEditingController;
-    late Future<List<Shoes>> searchFuture;
     late Future<List<Shoes>> searchFutureName;
     late CustomerHandler customerHandler; 
 
@@ -35,7 +34,7 @@ class _MgtProductMgtState extends State<MgtProductMgt> {
     searchFutureName = Future.value([]);
   }
 
-  void performSearchName() {
+  performSearchName() {
     final searchText = searchEditingController.text.trim();
       if (searchText.isNotEmpty) {
         searchFutureName = mgtHandler.queryShoesSearch(searchText);
@@ -48,22 +47,8 @@ class _MgtProductMgtState extends State<MgtProductMgt> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('product mgt'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Get.to(() => const MgtProductAdd())!
-                  .then((value) => reloadData());
-            },
-            icon: 
-              const Icon(Icons.add_outlined)
-          )
-        ],
-      ),
-      body: 
-      
-      SingleChildScrollView(
+      appBar: AppBar(),
+      body: SingleChildScrollView(
         child: Center(
           child: Column(
             children: [

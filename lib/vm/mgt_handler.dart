@@ -4,6 +4,8 @@ import 'package:flutter_teamproject_shoes/model/purchaseDetail.dart';
 import 'package:flutter_teamproject_shoes/model/shoes.dart';
 import 'package:flutter_teamproject_shoes/model/topAccount.dart';
 import 'package:flutter_teamproject_shoes/model/topfiveshoes.dart';
+import 'package:flutter_teamproject_shoes/model/transfer.dart';
+import 'package:flutter_teamproject_shoes/model/transferSummary.dart';
 import 'package:flutter_teamproject_shoes/vm/database_handler.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -36,21 +38,74 @@ Future<List<PurchaseDetail>> queryPurchaseDetails() async {
   final Database db = await databaseHandler.initializeDB();
   final List<Map<String, Object?>> queryResult = await db.rawQuery('''
     SELECT
-      purchase.id AS id,
-      account.name AS account_name,
-      account.phone AS account_phone,
-      shoes.name AS shoes_name,
-      shoes.size AS shoes_size,
-      shoes.color AS shoes_color,
-      shoes.brand AS shoes_brand,
-      purchase.salesprice,
-      purchase.purchasedate,
-      purchase.collectiondate,
-      purchase.collectionstatus
-    FROM purchase
-    INNER JOIN account ON purchase.account_id = account.id
-    INNER JOIN shoes ON purchase.shoes_id = shoes.id
-    order by purchase.purchasedate
+      p.id AS id,
+      a.name AS accountname,
+      a.phone AS accountphone,
+      s.name AS shoesname,
+      s.size AS shoessize,
+      s.color AS shoescolor,
+      s.brand AS shoesbrand,
+      p.salesprice,
+      p.purchasedate,
+      p.collectiondate,
+      p.collectionstatus
+    FROM purchase p, shoes s, account a 
+    WHERE p.account_id = a.id and
+      p.shoes_id = s.id and
+      a.name like ?
+      order by p.purchasedate
+  ''');
+  
+  return queryResult.map((e) => PurchaseDetail.fromMap(e)).toList();
+}
+  ////구매 내역 확인
+
+Future<List<PurchaseDetail>> queryPurchaseDetailsSearch(String name) async {
+  final Database db = await databaseHandler.initializeDB();
+  final List<Map<String, Object?>> queryResult = await db.rawQuery('''
+    SELECT
+      p.id AS id,
+      a.name AS accountname,
+      a.phone AS accountphone,
+      s.name AS shoesname,
+      s.size AS shoessize,
+      s.color AS shoescolor,
+      s.brand AS shoesbrand,
+      p.salesprice,
+      p.purchasedate,
+      p.collectiondate,
+      p.collectionstatus
+    FROM purchase p, shoes s, account a 
+    WHERE p.account_id = a.id and
+      p.shoes_id = s.id
+      order by p.purchasedate
+  ''');
+  
+  return queryResult.map((e) => PurchaseDetail.fromMap(e)).toList();
+}
+
+  ////구매 내역 확인
+
+Future<List<PurchaseDetail>> queryPurchaseDetails2Limit() async {
+    final Database db = await databaseHandler.initializeDB();
+    final List<Map<String, Object?>> queryResult = await db.rawQuery('''
+    SELECT
+      p.id AS id,
+      a.name AS accountname,
+      a.phone AS accountphone,
+      s.name AS shoesname,
+      s.size AS shoessize,
+      s.color AS shoescolor,
+      s.brand AS shoesbrand,
+      p.salesprice,
+      p.purchasedate,
+      p.collectiondate,
+      p.collectionstatus
+    FROM purchase p, shoes s, account a 
+    WHERE p.account_id = a.id and
+      p.shoes_id = s.id
+      order by p.purchasedate
+      LIMIT 2
   ''');
   
   return queryResult.map((e) => PurchaseDetail.fromMap(e)).toList();
@@ -64,7 +119,7 @@ Future<List<PurchaseDetail>> queryPurchaseDetails() async {
     final Database db = await databaseHandler.initializeDB();
     result = await db.rawInsert(
       """
-      insert into shoes(name, size, color, salesprice, image, logo, brand)
+      INSERT into shoes(name, size, color, salesprice, image, logo, brand)
       values (?,?,?,?,?,?,?)
       """, [
         shoes.name,
@@ -88,9 +143,9 @@ Future<List<PurchaseSummary>> querySalesToday() async{
     final Database db = await databaseHandler.initializeDB();
     final List<Map<String, Object?>> queryResult =
       await db.rawQuery('''
-      select count(id) sum(p.salesprice) 
-      from purchase 
-      where purchasedate = DATE('now', 'localtime')
+      SELECT count(id), sum(salesprice) 
+      FROM purchase
+      WHERE purchasedate = DATE('now', 'localtime')
       ''');
       return queryResult.map((e) => PurchaseSummary.fromMap(e)).toList();
   }
@@ -103,9 +158,9 @@ Future<List<PurchaseSummary>> querySalesMonth() async{
     final Database db = await databaseHandler.initializeDB();
     final List<Map<String, Object?>> queryResult =
       await db.rawQuery('''
-      select count(id) sum(salesprice) 
-      from purchase 
-      where strftime('%Y-%m-%d', purchasedate) = strftime('%Y-%m-%d', 'now', 'localtime')
+      SELECT count(id), sum(salesprice) 
+      FROM purchase 
+      WHERE strftime('%Y-%m-%d', purchasedate) = strftime('%Y-%m-%d', 'now', 'localtime')
       ''');
       return queryResult.map((e) => PurchaseSummary.fromMap(e)).toList();
   }
@@ -116,12 +171,13 @@ Future<List<Topfiveshoes>> queryTopFiveShoes() async{
     final Database db = await databaseHandler.initializeDB();
     final List<Map<String, Object?>> queryResult =
       await db.rawQuery('''
-    SELECT s.image, s.id, s.name, s.brand, COUNT(p.id), SUM(p.salesprice)
-    FROM shoes s
-    INNER JOIN purchase p ON s.id = p.shoes_id
-    WHERE strftime('%Y-%m-%d', p.purchasedate) = strftime('%Y-%m-%d', 'now', 'localtime')
+    SELECT 
+      s.image, s.id, s.name, s.brand, COUNT(p.id) as totalorder, SUM(p.salesprice) as totalsales
+    FROM shoes s, purchase p
+    WHERE s.id = p.shoes_id and
+      strftime('%Y-%m-%d', p.purchasedate) = strftime('%Y-%m-%d', 'now', 'localtime')
     GROUP BY s.id
-    ORDER BY total_sales DESC
+    ORDER BY totalsales DESC
     LIMIT 5
       ''');
       return queryResult.map((e) => Topfiveshoes.fromMap(e)).toList();
@@ -134,12 +190,12 @@ Future<List<Topbrand>> querySalesBrand() async{
     final Database db = await databaseHandler.initializeDB();
     final List<Map<String, Object?>> queryResult =
       await db.rawQuery('''
-      SELECT s.brand, SUM(p.salesprice) AS total_sales
-      FROM shoes s
-      INNER JOIN purchase p ON s.id = p.shoes_id
-      WHERE strftime('%Y-%m-%d', p.purchasedate) = strftime('%Y-%m-%d', 'now', 'localtime')
-      GROUP BY s.brand
-      ORDER BY total_sales DESC
+    SELECT s.brand, SUM(p.salesprice) AS totalsales
+    FROM shoes s, purchase p
+    WHERE s.id = p.shoes_id and
+      strftime('%Y-%m-%d', p.purchasedate) = strftime('%Y-%m-%d', 'now', 'localtime')
+    GROUP BY s.brand
+    ORDER BY totalsales DESC
       ''');
       return queryResult.map((e) => Topbrand.fromMap(e)).toList();
   }
@@ -149,18 +205,46 @@ Future<List<Topaccount>> queryTopFiveAccount() async{
     final Database db = await databaseHandler.initializeDB();
     final List<Map<String, Object?>> queryResult =
       await db.rawQuery('''
-      SELECT a.id AS account_id, a.name AS account_name, COUNT(p.id) AS purchase_count, SUM(p.salesprice) AS total_sales
-      FROM account a
-      INNER JOIN purchase p ON a.id = p.account_id
-      WHERE strftime('%Y-%m-%d', p.purchasedate) = strftime('%Y-%m-%d', 'now', 'localtime')
+      SELECT a.id AS accountid, a.name AS accountname, COUNT(p.id) AS purchasecount, SUM(p.salesprice) AS totalsales
+      FROM account a, purchase p
+      WHERE a.id = p.account_id and
+        strftime('%Y-%m-%d', p.purchasedate) = strftime('%Y-%m-%d', 'now', 'localtime')
       GROUP BY a.id
-      ORDER BY total_sales DESC
+      ORDER BY totalsales DESC
       LIMIT 5
       ''');
       return queryResult.map((e) => Topaccount.fromMap(e)).toList();
   }
 
+// 배송추가
 
-  
+Future<int> insertTransfer(Transfer transfer) async {
+  final Database db = await databaseHandler.initializeDB();
+    int result = await db.rawInsert(
+      """
+      INSERT INTO transfer (shoes_id, branch_id, date, collectionstatus)
+      VALUES (?, ?, ?, ?)
+      """, [
+      transfer.shoesid,
+      transfer.branchid,
+      transfer.date,
+      transfer.collectionstatus
+      ]
+    );
+    return result;
   }
+
+// 배송확인
+Future<List<Transfersummary>> queryTransfer() async {
+  final Database db = await databaseHandler.initializeDB();
+  final List<Map<String, Object?>> queryResult =
+    await db.rawQuery('''
+    SELECT t.id, b.name as branchname, s.id as shoesid, s.name as shoesname, t.date, t.collectionstatus
+    FROM transfer t, shoes s, branch b
+    WHERE b.id = t.branch_id and s.id = t.shoes_id
+    ''');
+  return queryResult.map((e) => Transfersummary.fromMap(e)).toList();
+}
+
+}
 

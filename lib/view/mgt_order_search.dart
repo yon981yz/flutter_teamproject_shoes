@@ -13,12 +13,24 @@ class MgtOrderSearch extends StatefulWidget {
 class _MgtOrderSearchState extends State<MgtOrderSearch> {
   late TextEditingController searchController;
   late MgtHandler mgtHandler;
+  late Future<List<PurchaseDetail>> searchFutureName;
 
   @override
   void initState() {
     mgtHandler = MgtHandler();
     searchController = TextEditingController();
+    searchFutureName = Future.value([]);
     super.initState();
+  }
+
+  performSearchName() {
+    final searchText = searchController.text.trim();
+      if (searchText.isNotEmpty) {
+        searchFutureName = mgtHandler.queryPurchaseDetailsSearch(searchText);
+      } else {
+        searchFutureName = Future.value([]);
+      }
+      setState(() {});
   }
 
   @override

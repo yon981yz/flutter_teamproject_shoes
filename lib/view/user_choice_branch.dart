@@ -1,83 +1,75 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_teamproject_shoes/vm/database_handler.dart';
-import 'package:get/get.dart';
+import 'package:flutter_teamproject_shoes/model/branch.dart';
+import 'package:flutter_teamproject_shoes/view/user_complite_product.dart';
 
-class UserChoiceBranch extends StatefulWidget {
-  const UserChoiceBranch({super.key});
-
+class UserChoiceBranchPage extends StatefulWidget {
   @override
-  State<UserChoiceBranch> createState() => _UserChoiceBranchState();
+  _UserChoiceBranchPageState createState() => _UserChoiceBranchPageState();
 }
 
-class _UserChoiceBranchState extends State<UserChoiceBranch> {
-  late TextEditingController searchController;
-  late DatabaseHandler handler;
-  var value = Get.arguments ?? '___';
-  @override
-  void initState() {
-    super.initState();
-    handler = DatabaseHandler();
-    searchController = TextEditingController();
+class _UserChoiceBranchPageState extends State<UserChoiceBranchPage> {
+  Branch? _selectedBranch;
+
+  Future<List<Branch>> _getBranches() async {
+    List<Branch> branches = [
+      Branch(id: 1, name: "SB Market 신사점"),
+      Branch(id: 2, name: "SB Market 잠실점"),
+      Branch(id: 3, name: "SB Market 강남점"),
+    ];
+    return branches;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Column(children: [
-          const Text(
-            'SB Market',
-            style: TextStyle(
-                color: Color(0xFF776661),
-                fontSize: 27,
-                fontFamily: 'Figma Hand',
-                fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.italic),
-          ),
-          Container(
-            height: 40,
-            decoration: BoxDecoration(
-                color: const Color(0xFFDADADA),
-                borderRadius: BorderRadius.circular(20)),
-            child: Row(children: [
-              SizedBox(
-                width: 300,
-                child: SizedBox(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(22, 0, 0, 0),
-                    child: TextField(
-                      controller: searchController,
-                    ),
-                  ),
-                ),
-              ),
-              IconButton(
-                  onPressed: () {
-                    //searchAction();
+      appBar: AppBar(title: Text('매장 위치 선택')), 
+      body: FutureBuilder<List<Branch>>(
+        future: _getBranches(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Center(child: Text('No branches available'));
+          } else {
+            return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                final branch = snapshot.data![index];
+                return RadioListTile<Branch>(
+                  title: Text(branch.name),
+                  value: branch,
+                  groupValue: _selectedBranch,
+                  onChanged: (Branch? value) {
+                    setState(() {
+                      _selectedBranch = value;
+                    });
                   },
-                  icon: const Icon(Icons.search)),
-            ]),
-          ),
-        ]),
-        toolbarHeight: 150,
-        backgroundColor: const Color(0xFFCFD2A5),
+                );
+              },
+            );
+          }
+        },
       ),
       floatingActionButton: FloatingActionButton(
-        shape: const CircleBorder(),
-        onPressed: () {
-          //
-        },
-        backgroundColor: const Color(0xD3776661),
-        child: const Text(
-          '선택',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
-      body: Center(
-        child: Column(
-          children: [Text(value[0]), Image.memory(value[4])],
-        ),
+        onPressed: _selectedBranch != null
+            ? () {
+                 // navigating to usrcompleietproductpage with the selected branch
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UserCompliteProductPage(
+                      purchaseId: 1,   // example purchaseid it should be dynamic in a real app
+                      selectedBranch: _selectedBranch!,
+                    ),
+                  ),
+                );
+              }
+            : null,   // here disable the button if no branch is selected
+        child: Icon(Icons.arrow_forward),
+        backgroundColor: _selectedBranch != null ? Colors.blue : Colors.grey,
       ),
     );
   }
-}// END
+}
