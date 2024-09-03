@@ -20,16 +20,28 @@ Future<List<Purchase>> queryPurchase(int id) async{
   }
 
 // 지점
-Future<void> insertBranches(List<Branch> name) async {
+Future<void> insertBranches(List<Branch> branches) async {
   final Database db = await databaseHandler.initializeDB();
-  for (var branch in name) {
-    await db.rawInsert(
-      """
-      insert into branch(name)
-      values(?)
-      """,
+
+  for (var branch in branches) {
+    // 지점이 이미 존재하는지 확인
+    final List<Map<String, dynamic>> result = await db.rawQuery(
+      "SELECT * FROM branch WHERE name = ?",
       [branch.name],
     );
+
+    // 지점 중복 방지
+    if (result.isEmpty) {
+      await db.rawInsert(
+        """
+        INSERT INTO branch(name)
+        VALUES(?)
+        """,
+        [branch.name],
+      );
+      print('Inserted branch: ${branch.name}');
+    }
   }
 }
+
 }

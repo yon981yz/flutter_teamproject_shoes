@@ -25,17 +25,14 @@ KioskHandler kioskHandler = KioskHandler();
   addBranch();
   }
 
-  Future <void>addBranch()async{
+  Future addBranch()async{
       List<Branch> name = [
       Branch(name: '강남점'),
       Branch(name: '신사점'),
       Branch(name: '잠실점'),
     ];
     await kioskHandler.insertBranches(name);
-    print(name);
   }
-
-
 
   @override
   Widget build(BuildContext context) {

@@ -96,15 +96,17 @@ Future<List<Account>> queryMyinfo(String id) async{
   }
 
   // 키오스크에서 주문번호 검색
-Future<int> queryPurchaseNumber(String id) async {
+Future<int> queryPurchaseNumber(int id) async {
   final Database db = await databaseHandler.initializeDB();
   List<Map<String, dynamic>> queryResult = await db.rawQuery(
     """
-    select count(*) as count from purchase where id = ?
-    """, [id]
+    SELECT COUNT(*) AS count FROM purchase WHERE id = ?
+    """,
+    [id],
   );
-    return queryResult.isNotEmpty ? 1 : 0;
-  }
+
+  return queryResult.isNotEmpty ? queryResult[0]['count'] as int : 0;
+}
 
 ///// 신발 이미지로 정렬 (고객 구매 페이지 디스플레이) 
 
@@ -240,6 +242,8 @@ Future<List<Shoes>> queryProSpecsSearch(String name) async{
     return result;
   }
 
+  
+
   // 구매상품확인
   Future<List<PurchaseComplete>> queryuserpurchase() async{
     final Database db = await databaseHandler.initializeDB();
@@ -249,7 +253,6 @@ Future<List<Shoes>> queryProSpecsSearch(String name) async{
         from branch b, purchase p 
         where b.id=p.branch_id
         ''');
-        print(queryResult);
       return queryResult.map((e) => PurchaseComplete.fromMap(e)).toList();
   }
 

@@ -33,209 +33,212 @@ class _CustHomeState extends State<CustHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 400,
-              width: 400,
-              child: Image.asset(
-                'images/shoses.png',
+      body: SingleChildScrollView(
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 400,
+                width: 400,
+                child: Image.asset(
+                  'images/shoses.png',
+                ),
               ),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    '주문번호',
-                    style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    width: 400,
-                    child: TextField(
-                      controller: numberController,
-                      onTap: () {
-                        button1Visible = true;
-                        button2Visible = false;
-                        setState(() {});
-                      },
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 100,
-                ),
-                Visibility(
-                  visible: button1Visible,
-                  child: Row(
-                    children: [
-                      Column(
-                        children: [
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    viewNumber1();
-                                  },
-                                  child: const Text('1'),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    viewNumber2();
-                                  },
-                                  child: const Text('2'),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    viewNumber3();
-                                  },
-                                  child: const Text('3'),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    viewNumber4();
-                                  },
-                                  child: const Text('4'),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    viewNumber5();
-                                  },
-                                  child: const Text('5'),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    viewNumber6();
-                                  },
-                                  child: const Text('6'),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    viewNumber7();
-                                  },
-                                  child: const Text('7'),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    viewNumber8();
-                                  },
-                                  child: const Text('8'),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    viewNumber9();
-                                  },
-                                  child: const Text('9'),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    numberController.text = '';
-                                  },
-                                  child: const Text('취소'),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    viewNumber5();
-                                  },
-                                  child: const Text('0'),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    button1Visible = false;
-                                    button2Visible = true;
-                                    setState(() {});
-                                  },
-                                  child: const Text('입력'),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Visibility(
-                  visible: button2Visible,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      checknumber();
-                    },
-                    style: ElevatedButton.styleFrom(
-                        fixedSize: const Size(200, 100),
-                        backgroundColor: const Color(0xFF758D65),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(100),
-                        )),
-                    child: const Text(
-                      '확인',
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      '주문번호',
                       style: TextStyle(
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      width: 400,
+                      child: TextField(
+                        controller: numberController,
+                        onTap: () {
+                          button1Visible = true;
+                          button2Visible = false;
+                          setState(() {});
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 100,
+                  ),
+                  Visibility(
+                    visible: button1Visible,
+                    child: Row(
+                      children: [
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      viewNumber1();
+                                    },
+                                    child: const Text('1'),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      viewNumber2();
+                                    },
+                                    child: const Text('2'),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      viewNumber3();
+                                    },
+                                    child: const Text('3'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      viewNumber4();
+                                    },
+                                    child: const Text('4'),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      viewNumber5();
+                                    },
+                                    child: const Text('5'),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      viewNumber6();
+                                    },
+                                    child: const Text('6'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      viewNumber7();
+                                    },
+                                    child: const Text('7'),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      viewNumber8();
+                                    },
+                                    child: const Text('8'),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      viewNumber9();
+                                    },
+                                    child: const Text('9'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      numberController.text = '';
+                                    },
+                                    child: const Text('취소'),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      viewNumber5();
+                                    },
+                                    child: const Text('0'),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      button1Visible = false;
+                                      button2Visible = true;
+                                      setState(() {});
+                                    },
+                                    child: const Text('입력'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Visibility(
+                    visible: button2Visible,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        checknumber();
+                      },
+                      style: ElevatedButton.styleFrom(
+                          fixedSize: const Size(200, 100),
+                          backgroundColor: const Color(0xFF758D65),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                        ),
+                      child: const Text(
+                        '확인',
+                        style: TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -244,15 +247,16 @@ class _CustHomeState extends State<CustHome> {
   // --- Functions ---
 
   checknumber()async{
-    int result = await customerHandler.queryPurchaseNumber(numberController.text);
-    if(result == 1){
-      Get.to(
-        ()=> const CustProductCheck()
-      );
-    }else{
+
+    int number = int.parse(numberController.text.trim());
+    int result = await customerHandler.queryPurchaseNumber(number);
+
+    if (result == 1) {
+      Get.to(() => const CustProductCheck());
+    } else {
       _showDialog();
     }
-  }
+}
 
   _showDialog(){
     Get.defaultDialog(
