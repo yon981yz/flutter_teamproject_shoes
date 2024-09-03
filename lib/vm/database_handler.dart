@@ -51,7 +51,7 @@ class DatabaseHandler{
 
         await db.execute("""
           CREATE TABLE purchase (
-            id TEXT PRIMARY KEY,
+            id INTEGER PRIMARY KEY,
             account_id TEXT,
             shoes_id INTEGER,
             branch_id INTEGER,
@@ -82,5 +82,4 @@ class DatabaseHandler{
       version: 1
     );
   }
-
 }

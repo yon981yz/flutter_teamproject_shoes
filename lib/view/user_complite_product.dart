@@ -48,46 +48,91 @@ class _UserCompliteProductState extends State<UserCompliteProduct> {
               future: handler.queryuserpurchase(), 
               builder: (context, snapshot) {
                 if(snapshot.hasData){
-                  return Column(
+                  return Column(mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // const Text('구매가 확정되었습니다.'),
-                      const Text('주문번호'),
-                      Text(snapshot.data![0].toString()),
-                      Text(snapshot.data![1].toString()),
-                      const Text('매장 키오스크를\n이용하여 제품을 수령하세요.'),
+                      Padding(
+                        padding: const EdgeInsets.all(30.0),
+                        child: Text('구매가 확정되었습니다.',
+                        style: TextStyle(
+                          fontSize: 20
+                        ),
+                        ),
+                      ),
+                      Text('주문번호',
+                      style: TextStyle(
+                        fontSize: 20
+                      ),
+                      ),
+                      Text(snapshot.data![snapshot.data!.length-1].id.toString(),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25
+                      ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(30.0),
+                        child: Text('선택 지점: ${snapshot.data![snapshot.data!.length-1].branch.toString()}',
+                        style: TextStyle(
+                          fontSize: 25
+                        ),                      
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Text('매장 키오스크를\n이용하여 제품을 수령하세요.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Color.fromARGB(255, 118, 113, 111)
+                        ),
+                        ),
+                      ),
                     ],
                   );
-                }else{
-                  return const Center(
+                }else if (snapshot.hasError) {
+                            return Center(
+                                child: Text('Error: ${snapshot.error}'));
+                          }
+                else{
+                  return Center(
                     child: Text('다시 시도해주세요.'),
                   );
                 }
               }
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+              Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    backgroundColor: const Color(0xFF8E807C)
+                  ),                
+                  onPressed: () {
+                    Get.to(UserProcuctCheck(),
+                    arguments: [
+                      value[0],
+                      value[1],
+                      value[2],
+                      value[3],
+                      value[4],
+                      value[5],
+                      value[6],
+                      value[7],                    
+                    ]
+                    );
+                  }, 
+                  child: Text('상세 정보',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold
                   ),
-                  backgroundColor: const Color(0xFF8E807C)
-                ),                
-                onPressed: () {
-                  Get.to(
-                    ()=> const UserProcuctCheck(),
-                  arguments: [
-                    value[0],
-                    value[1],
-                    value[2],
-                    value[3],
-                    value[4],
-                    value[5],
-                    value[6],
-                    value[7],                    
-                  ]
-                  );
-                }, 
-                child: const Text('상세 정보')
-                ),
+                  )
+                  ),
+              ),
           ],
         ),
       ),  
