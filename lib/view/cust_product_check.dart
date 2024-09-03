@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_teamproject_shoes/vm/customer_handler.dart';
 
 class CustProductCheck extends StatefulWidget {
   const CustProductCheck({super.key});
@@ -8,8 +9,14 @@ class CustProductCheck extends StatefulWidget {
 }
 
 class _CustProductCheckState extends State<CustProductCheck> {
+  CustomerHandler customerHandler = CustomerHandler();
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('수령'),
+      ),
+    );
   }
 }
