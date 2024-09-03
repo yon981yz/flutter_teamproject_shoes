@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:flutter_teamproject_shoes/model/PurchaseComplete.dart';
+import 'package:flutter_teamproject_shoes/model/purchaseComplete.dart';
 import 'package:flutter_teamproject_shoes/model/account.dart';
 import 'package:flutter_teamproject_shoes/model/purchase.dart';
 import 'package:flutter_teamproject_shoes/model/shoes.dart';
@@ -131,7 +131,7 @@ Future<List<int>> queryShoesSize(Uint8List image) async{
     final List<Map<String, Object?>> queryResult =
       await db.rawQuery('select *from shoes where image=? and size=?',
       [image, size]);
-      return queryResult.map((e) => Shoes.fromMap(e)).toList();  
+      return queryResult.map((e) => Shoes.fromMap(e)).toList();
   }
 
 ///// 신발 이미지로 정렬한상태에서 이름으로 검색 (고객 구매 페이지 디스플레이에서 검색)
@@ -248,11 +248,11 @@ Future<List<Shoes>> queryProSpecsSearch(String name) async{
   Future<List<PurchaseComplete>> queryuserpurchase() async{
     final Database db = await databaseHandler.initializeDB();
     final List<Map<String, Object?>> queryResult =
-      await db.rawQuery('''
+      await db.rawQuery("""
         select p.id, b.name
-        from branch b, purchase p 
+        from branch as b, purchase as p 
         where b.id=p.branch_id
-        ''');
+        """);
       return queryResult.map((e) => PurchaseComplete.fromMap(e)).toList();
   }
 

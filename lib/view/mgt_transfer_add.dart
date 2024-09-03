@@ -199,7 +199,7 @@ class _MgtTransferAddState extends State<MgtTransferAdd> {
   }
 
   String formatDate(DateTime date) {
-    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    final DateFormat formatter = DateFormat('yyyy-MM-dd HH:mm');
     return formatter.format(date);
   }
 

@@ -1,5 +1,5 @@
 class Topaccount {
-  final int accountId;
+  final String accountId;
   final String accountName;
   final int purchaseCount;
   final int totalSales;

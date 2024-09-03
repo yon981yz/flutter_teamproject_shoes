@@ -9,8 +9,13 @@ class PurchaseComplete{
     }
   );
 
-  PurchaseComplete.fromMap(Map<String, dynamic> acs)
-  : id = acs['id'],
-  branch = acs['branch'];
+  factory PurchaseComplete.fromMap(Map<String, dynamic> acs){
+    return PurchaseComplete(
+      id: acs['id'] , 
+      branch: acs['name']
+      );
+  }
+  // : id = acs['id'],
+  // branch = acs['branch'];
   
 }// done

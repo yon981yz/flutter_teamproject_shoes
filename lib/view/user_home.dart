@@ -246,21 +246,7 @@ class _UserHomeState extends State<UserHome> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.to(()=>const UserProductDetails(),
-                                      arguments: [
-                                        snapshot.data![index].name,
-                                        snapshot.data![index].size,
-                                        snapshot.data![index].color,
-                                        snapshot.data![index].salesprice,
-                                        snapshot.data![index].image,
-                                        snapshot.data![index].logo,
-                                        snapshot.data![index].brand,
-                                      ]
-                                      );
-                                    },
-                                    child: Image.memory(snapshot.data![index].image, width: 130,)),
+                                  Image.memory(snapshot.data![index].image, width: 130,),
                                   Row(
                                     children: [
                                       Image.memory(snapshot.data![index].logo, width: 40,),
@@ -291,7 +277,6 @@ class _UserHomeState extends State<UserHome> {
                                             sizeValue=value;
                                           });
                                         }
-                                        handler.querySelectshoe(snapshot.data![index].image, sizeValue);
                                         Get.to(()=>const UserProductDetails(),
                                         arguments: [
                                           snapshot.data![index].name,
@@ -348,21 +333,7 @@ class _UserHomeState extends State<UserHome> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.to(()=>const UserProductDetails(),
-                                      arguments: [
-                                        snapshot.data![index].name,
-                                        snapshot.data![index].size,
-                                        snapshot.data![index].color,
-                                        snapshot.data![index].salesprice,
-                                        snapshot.data![index].image,
-                                        snapshot.data![index].logo,
-                                        snapshot.data![index].brand,
-                                      ]
-                                      );
-                                    },
-                                    child: Image.memory(snapshot.data![index].image, width: 130,)),
+                                  Image.memory(snapshot.data![index].image, width: 130,),
                                   Row(
                                     children: [
                                       Image.memory(snapshot.data![index].logo, width: 40,),
@@ -392,7 +363,6 @@ class _UserHomeState extends State<UserHome> {
                                             sizeValue=value;
                                           });
                                         }
-                                        handler.querySelectshoe(snapshot.data![index].image, shot.data![index]);
                                         Get.to(()=>const UserProductDetails(),
                                         arguments: [
                                           snapshot.data![index].name,
@@ -449,21 +419,7 @@ class _UserHomeState extends State<UserHome> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.to(()=>const UserProductDetails(),
-                                      arguments: [
-                                        snapshot.data![index].name,
-                                        snapshot.data![index].size,
-                                        snapshot.data![index].color,
-                                        snapshot.data![index].salesprice,
-                                        snapshot.data![index].image,
-                                        snapshot.data![index].logo,
-                                        snapshot.data![index].brand,
-                                      ]
-                                      );
-                                    },
-                                    child: Image.memory(snapshot.data![index].image, width: 130,)),
+                                  Image.memory(snapshot.data![index].image, width: 130,),
                                   Row(
                                     children: [
                                       Image.memory(snapshot.data![index].logo, width: 40,),
@@ -492,7 +448,6 @@ class _UserHomeState extends State<UserHome> {
                                             sizeValue=value;
                                           });
                                         }
-                                        handler.querySelectshoe(snapshot.data![index].image, sizeValue);
                                         Get.to(()=>const UserProductDetails(),
                                         arguments: [
                                           snapshot.data![index].name,
@@ -550,21 +505,7 @@ class _UserHomeState extends State<UserHome> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.to(()=>const UserProductDetails(),
-                                      arguments: [
-                                        snapshot.data![index].name,
-                                        snapshot.data![index].size,
-                                        snapshot.data![index].color,
-                                        snapshot.data![index].salesprice,
-                                        snapshot.data![index].image,
-                                        snapshot.data![index].logo,
-                                        snapshot.data![index].brand,
-                                      ]
-                                      );
-                                    },
-                                    child: Image.memory(snapshot.data![index].image, width: 130,)),
+                                  Image.memory(snapshot.data![index].image, width: 130,),
                                   Row(
                                     children: [
                                       Image.memory(snapshot.data![index].logo, width: 40,),
@@ -596,7 +537,6 @@ class _UserHomeState extends State<UserHome> {
                                             sizeValue=value;
                                             });
                                           }
-                                          handler.querySelectshoe(snapshot.data![index].image, sizeValue);
                                           Get.to(()=>const UserProductDetails(),
                                           arguments: [
                                             snapshot.data![index].name,
@@ -657,21 +597,7 @@ class _UserHomeState extends State<UserHome> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.to(()=>const UserProductDetails(),
-                                      arguments: [
-                                        snapshot.data![index].name,
-                                        snapshot.data![index].size,
-                                        snapshot.data![index].color,
-                                        snapshot.data![index].salesprice,
-                                        snapshot.data![index].image,
-                                        snapshot.data![index].logo,
-                                        snapshot.data![index].brand,
-                                      ]
-                                      );
-                                    },
-                                    child: Image.memory(snapshot.data![index].image, width: 130,)),
+                                  Image.memory(snapshot.data![index].image, width: 130,),
                                   Row(
                                     children: [
                                       Image.memory(snapshot.data![index].logo, width: 40,),
@@ -702,7 +628,6 @@ class _UserHomeState extends State<UserHome> {
                                           });
                                           value.toInt();
                                         }
-                                        handler.querySelectshoe(snapshot.data![index].image, sizeValue);
                                         Get.to(()=>const UserProductDetails(),
                                         arguments: [
                                           snapshot.data![index].name,
@@ -757,21 +682,7 @@ class _UserHomeState extends State<UserHome> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.to(()=>const UserProductDetails(),
-                                      arguments: [
-                                        snapshot.data![index].name,
-                                        snapshot.data![index].size,
-                                        snapshot.data![index].color,
-                                        snapshot.data![index].salesprice,
-                                        snapshot.data![index].image,
-                                        snapshot.data![index].logo,
-                                        snapshot.data![index].brand,
-                                      ]
-                                      );
-                                    },
-                                    child: Image.memory(snapshot.data![index].image, width: 130,)),
+                                  Image.memory(snapshot.data![index].image, width: 130,),
                                   Row(
                                     children: [
                                       Image.memory(snapshot.data![index].logo, width: 40,),
@@ -801,7 +712,6 @@ class _UserHomeState extends State<UserHome> {
                                             sizeValue=value;
                                           });
                                         }
-                                        handler.querySelectshoe(snapshot.data![index].image, sizeValue);
                                         Get.to(()=>const UserProductDetails(),
                                         arguments: [
                                           snapshot.data![index].name,
