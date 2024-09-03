@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_teamproject_shoes/model/account.dart';
+import 'package:flutter_teamproject_shoes/model/password_checkuser.dart';
 import 'package:flutter_teamproject_shoes/vm/customer_handler.dart';
 import 'package:flutter_teamproject_shoes/vm/database_handler.dart';
 import 'package:get/get.dart';
@@ -12,9 +13,11 @@ class UserSignIn extends StatefulWidget {
 }
 
 class _UserSignInState extends State<UserSignIn> {
+  
   // Property
   DatabaseHandler handler = DatabaseHandler();
   CustomerHandler customerHandler = CustomerHandler();
+  PasswordCheckUser passwordCheckUser = PasswordCheckUser();
 
   late TextEditingController userIdController;
   late TextEditingController passwordController;
@@ -22,6 +25,7 @@ class _UserSignInState extends State<UserSignIn> {
   late TextEditingController nameController;
   late TextEditingController phoneController;
   late String checkpassword;
+  late String passwordcheck;
   late Color textColor;
   late String checkID;
   late Color textIDColor;
@@ -35,6 +39,7 @@ class _UserSignInState extends State<UserSignIn> {
     nameController = TextEditingController();
     phoneController = TextEditingController();
     checkpassword = '';
+    passwordcheck = '';
     checkID = '';
     textColor = Colors.black;
     textIDColor = Colors.black;
@@ -65,10 +70,8 @@ class _UserSignInState extends State<UserSignIn> {
                         ),
                         Text(
                           checkID,
-                          style: TextStyle(
-                            color: textIDColor
-                          ),
-                          )
+                          style: TextStyle(color: textIDColor),
+                        )
                       ],
                     ),
                   ),
@@ -78,16 +81,16 @@ class _UserSignInState extends State<UserSignIn> {
                   child: Row(
                     children: [
                       ElevatedButton(
-                          onPressed: () {
-                            checkUserID();
-                          },
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFC06044)),
-                          child: const Text(
-                            '중복확인',
-                            style: TextStyle(color: Colors.white),
-                          ),
+                        onPressed: () {
+                          checkUserID();
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFFC06044)),
+                        child: const Text(
+                          '중복확인',
+                          style: TextStyle(color: Colors.white),
                         ),
+                      ),
                     ],
                   ),
                 ),
@@ -103,8 +106,12 @@ class _UserSignInState extends State<UserSignIn> {
                 },
                 decoration: const InputDecoration(
                   labelText: '비밀번호',
-                  ),
+                ),
               ),
+            ),
+            Text(
+              checkpassword,
+              style: TextStyle(color: textColor),
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),
@@ -113,17 +120,16 @@ class _UserSignInState extends State<UserSignIn> {
                 obscureText: true,
                 decoration: const InputDecoration(
                   labelText: '비밀번호 확인',
-                  ),
-                  onChanged: (value) {
-                    checkPassworld();
-                  },
+                ),
+                onChanged: (value) {
+                  checkPassworld();
+                },
               ),
             ),
             Text(
-              checkpassword,
-              style: TextStyle(
-                color: textColor
-              ),),
+              passwordcheck,
+              style: TextStyle(color: textColor),
+            ),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: TextField(
@@ -157,35 +163,35 @@ class _UserSignInState extends State<UserSignIn> {
 
   // --- Functions ---
 
-  checkUserID()async{
-      int result = await customerHandler.serchID(userIdController.text.trim());
-    if(result == 1){
+  checkUserID() async {
+    int result = await customerHandler.serchID(userIdController.text.trim());
+    if (result == 1) {
       checkID = '아이디가 중복됩니다';
       textIDColor = Colors.red;
-    }else{
+    } else {
       checkID = '사용가능한 아이디 입니다.';
       textIDColor = Colors.green;
     }
-    setState(() {
-    });
+    setState(() {});
   }
 
-  addAccount()async{
+  addAccount() async {
     int result = await customerHandler.serchID(userIdController.text.trim());
-    if(result == 1){
+    if (result == 1) {
       _showDialog('아이디가 중복됩니다', '새로운 아이디를 확인해 주세요');
-    }else{
-    Account accout = Account(
-      id: userIdController.text.trim(),
-      name: nameController.text.trim(), 
-      password: passwordController.text.trim(),
-      phone: phoneController.text.trim(), 
+    } else {
+      Account accout = Account(
+        id: userIdController.text.trim(),
+        name: nameController.text.trim(),
+        password: passwordController.text.trim(),
+        phone: phoneController.text.trim(),
       );
       await customerHandler.insertAccount(accout);
-      _showDialog('환영합니다','회원가입이 완료 되었습니다.');}
+      _showDialog('환영합니다', '회원가입이 완료 되었습니다.');
+    }
   }
 
-    _showDialog(String check_user_id, String welcome_user) {
+  _showDialog(String check_user_id, String welcome_user) {
     Get.defaultDialog(
         title: check_user_id,
         middleText: welcome_user,
@@ -194,12 +200,12 @@ class _UserSignInState extends State<UserSignIn> {
         actions: [
           TextButton(
             onPressed: () {
-              if(check_user_id == '환영합니다'){
-              Get.back(); 
-              Get.back(); 
+              if (check_user_id == '환영합니다') {
+                Get.back();
+                Get.back();
               }
-              if(check_user_id == '아이디가 중복됩니다'){
-              Get.back(); 
+              if (check_user_id == '아이디가 중복됩니다') {
+                Get.back();
               }
             },
             child: const Text('확인'),
@@ -207,16 +213,35 @@ class _UserSignInState extends State<UserSignIn> {
         ]);
   }
 
+checkPassworld() {
+  // 비밀번호 유효성 검사
+  String? passwordValidationMessage =
+      passwordCheckUser.validatePassword(passwordController.text.trim());
 
-  checkPassworld(){
-    if(passwordController.text.trim() == repasswordController.text.trim()){
-      checkpassword = '비밀번호가 일치합니다';
-      textColor = Colors.green;
-    }else{
-      checkpassword = '입력한 비밀번호가 다릅니다. 비밀번호를 확인해주세요';
-      textColor = Colors.red;
-    }
-    setState(() {});
+  // 비밀번호가 유효한 경우
+  if (passwordValidationMessage == null) {
+    checkpassword = '확인되었습니다';
+  } else {
+    checkpassword = passwordValidationMessage;
+    textColor = Colors.red;
   }
+
+  // 비밀번호 확인 유효성 검사
+  String? confirmPasswordValidationMessage = passwordCheckUser.validatePasswordConfirm(
+    passwordController.text.trim(), 
+    repasswordController.text.trim()
+  );
+
+  // 비밀번호 확인 메시지 설정
+  if (confirmPasswordValidationMessage == null) {
+    passwordcheck = '비밀번호가 일치합니다';
+    textColor = Colors.green;
+  } else {
+    passwordcheck = confirmPasswordValidationMessage;
+  }
+
+  // 상태 갱신하여 UI 업데이트
+  setState(() {});
+}
 
 }// END
