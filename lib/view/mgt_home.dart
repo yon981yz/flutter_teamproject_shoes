@@ -3,7 +3,6 @@ import 'package:flutter_teamproject_shoes/view/mgt_order_search.dart';
 import 'package:flutter_teamproject_shoes/view/mgt_product_mgt.dart';
 import 'package:flutter_teamproject_shoes/view/mgt_statistic.dart';
 import 'package:flutter_teamproject_shoes/view/mgt_transfer_mgt.dart';
-import 'package:flutter_teamproject_shoes/view/test.dart';
 import 'package:flutter_teamproject_shoes/vm/mgt_handler.dart';
 import 'package:get/route_manager.dart';
 
