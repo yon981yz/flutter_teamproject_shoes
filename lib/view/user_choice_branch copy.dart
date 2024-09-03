@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_teamproject_shoes/model/purchase.dart';
 import 'package:flutter_teamproject_shoes/view/user_complite_product%20copy.dart';
-import 'package:flutter_teamproject_shoes/view/user_complite_product.dart';
 import 'package:flutter_teamproject_shoes/vm/customer_handler.dart';
 import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
