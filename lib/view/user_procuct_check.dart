@@ -25,10 +25,10 @@ class _UserProcuctCheckState extends State<UserProcuctCheck> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Column(children: [
+        title: const Column(children: [
           Text(
             'SB Market',
-            style: TextStyle(
+            style: const TextStyle(
                 color: Color(0xFF776661),
                 fontSize: 27,
                 fontFamily: 'Figma Hand',
@@ -37,7 +37,7 @@ class _UserProcuctCheckState extends State<UserProcuctCheck> {
           ),
         ]),
         toolbarHeight: 100,
-        backgroundColor: Color(0xFFCFD2A5),
+        backgroundColor: const Color(0xFFCFD2A5),
       ),
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center,
@@ -75,6 +75,7 @@ class _UserProcuctCheckState extends State<UserProcuctCheck> {
                       ),
                     ],
                   );
+
                 }else if (snapshot.hasError) {
                             return Center(
                                 child: Text('Error: ${snapshot.error}'));
@@ -95,6 +96,7 @@ class _UserProcuctCheckState extends State<UserProcuctCheck> {
                     ),
                     backgroundColor: const Color(0xFF8E807C)
                   ),
+
                   onPressed: () {
                     Get.to(UserHome(),
                     );

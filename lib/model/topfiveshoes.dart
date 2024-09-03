@@ -3,8 +3,8 @@ import 'dart:typed_data';
 class Topfiveshoes {
   final Uint8List image;
   final int shoesid;
-  final int shoesname;
-  final int shoesbrand;
+  final String shoesname;
+  final String shoesbrand;
   final int totalOrder;
   final int totalsales;
 

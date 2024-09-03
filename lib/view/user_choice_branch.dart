@@ -6,6 +6,7 @@ import 'package:flutter_teamproject_shoes/view/user_complite_product.dart';
 import 'package:flutter_teamproject_shoes/vm/customer_handler.dart';
 import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
 
 
 class UserChoiceBranch extends StatefulWidget {
@@ -16,6 +17,7 @@ class UserChoiceBranch extends StatefulWidget {
 }
 
 class _UserChoiceBranchState extends State<UserChoiceBranch> {
+  late String orderNumber;
   late CustomerHandler handler;
   late int radioValue;
   var value=Get.arguments ??'___';
@@ -25,6 +27,7 @@ class _UserChoiceBranchState extends State<UserChoiceBranch> {
   @override
   void initState() {
     super.initState();
+    orderNumber = randomOrderNumber();
     radioValue=0;
     handler=CustomerHandler();
 
@@ -165,17 +168,35 @@ class _UserChoiceBranchState extends State<UserChoiceBranch> {
 
     insertAction() async{
     var purchaseInsert=Purchase(
-    id: Random().nextInt(9999),
+    id: int.parse(orderNumber),
     shoesid: value[7],
-    accountid: 'asfd',
+    accountid: '123',
     branchid: radioValue+1,
     salesprice: value[3],
-    purchasedate: DateTime.now().toString(),
+    purchasedate: formatDate(DateTime.now()),
     collectionstatus: '미수령',
     collectiondate: ''
       );
       int result = await handler.insertPurchase(purchaseInsert);
       if(result!=0){
       }
+  }
+
+  String formatDate(DateTime date) {
+    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    return formatter.format(date);
+  }
+
+String randomOrderNumber() {
+  int randomNumber = Random().nextInt(999999);
+  DateTime date = DateTime.now();
+  formatDate(date);
+  String result = '${formatDate2(date)}${randomNumber.toString().padLeft(6, '0')}';
+  return result;
+}
+
+  String formatDate2(DateTime date) {
+    final DateFormat formatter = DateFormat('yyyyMMdd');
+    return formatter.format(date);
   }
 }
