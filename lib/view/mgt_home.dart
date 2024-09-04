@@ -219,11 +219,6 @@ class _MgtHomeState extends State<MgtHome> {
                                   final data = snapshot.data!;
                                   List<DataRow> rows = data.map((shoes) {
                                     return DataRow(cells: [
-                                      DataCell(Image.memory(
-                                        shoes.image,
-                                        width: 100,
-                                        height: 50,
-                                      )),
                                       DataCell(
                                           Text(shoes.shoesname.toString())),
                                       DataCell(
@@ -236,7 +231,6 @@ class _MgtHomeState extends State<MgtHome> {
                                   }).toList();
                                   return DataTable(
                                     columns: const [
-                                      DataColumn(label: Text('이미지')),
                                       DataColumn(label: Text('상품명')),
                                       DataColumn(label: Text('제조사')),
                                       DataColumn(label: Text('주문수')),
@@ -247,8 +241,6 @@ class _MgtHomeState extends State<MgtHome> {
                                 } else {
                                   return DataTable(
                                     columns: const [
-                                      DataColumn(label: Text('이미지')),
-                                      DataColumn(label: Text('상품번호')),
                                       DataColumn(label: Text('상품명')),
                                       DataColumn(label: Text('제조사')),
                                       DataColumn(label: Text('주문수')),
@@ -256,8 +248,6 @@ class _MgtHomeState extends State<MgtHome> {
                                     ],
                                     rows: const [
                                       DataRow(cells: [
-                                        DataCell(Text('')),
-                                        DataCell(Text('')),
                                         DataCell(Text('')),
                                         DataCell(Text('')),
                                         DataCell(Text('')),
@@ -422,11 +412,11 @@ class _MgtHomeState extends State<MgtHome> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.to(() => const Test())!.then((value) => reloadData());
-        },
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Get.to(() => const Test())!.then((value) => reloadData());
+      //   },
+      // ),
     );
   }
 

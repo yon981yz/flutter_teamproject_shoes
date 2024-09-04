@@ -137,6 +137,7 @@ class _CustProductCheckState extends State<CustProductCheck> {
         TextButton(
           onPressed: () {
             Get.back();
+            Get.back();
           }, 
           child: const Text('ok')
         ),

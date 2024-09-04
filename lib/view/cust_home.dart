@@ -190,7 +190,7 @@ class _CustHomeState extends State<CustHome> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      viewNumber5();
+                                      viewNumber0();
                                     },
                                     child: const Text('0'),
                                   ),
@@ -256,6 +256,7 @@ class _CustHomeState extends State<CustHome> {
         () => const CustProductCheck(),
         arguments: number,
         );
+        numberController.text = '';
     } else {
       _showDialog();
     }
