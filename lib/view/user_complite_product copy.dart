@@ -4,14 +4,14 @@ import 'package:flutter_teamproject_shoes/view/user_procuct_check.dart';
 import 'package:flutter_teamproject_shoes/vm/customer_handler.dart';
 import 'package:get/get.dart';
 
-class UserCompleteProduct extends StatefulWidget {
-  const UserCompleteProduct({super.key});
+class UserCompliteProduct extends StatefulWidget {
+  const UserCompliteProduct({super.key});
 
   @override
-  State<UserCompleteProduct> createState() => _UserCompleteProductState();
+  State<UserCompliteProduct> createState() => _UserCompliteProductState();
 }
 
-class _UserCompleteProductState extends State<UserCompleteProduct> {
+class _UserCompliteProductState extends State<UserCompliteProduct> {
   var value=Get.arguments ??'___';
   late CustomerHandler handler;
 
@@ -121,7 +121,8 @@ class _UserCompleteProductState extends State<UserCompleteProduct> {
                       value[4],
                       value[5],
                       value[6],
-                      value[7],                    
+                      value[7], 
+                      value[8], 
                     ]
                     );
                   }, 
